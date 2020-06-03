@@ -1,0 +1,15 @@
+name: agro_picker_bloc
+description: Shared Code for Producer and Consumer
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.5.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^1.1.1
+  http: ^0.12.0+4
+  bloc: ^4.0.0
+  flutter_bloc: ^4.0.0
+  cloud_firestore: ^0.13.5
