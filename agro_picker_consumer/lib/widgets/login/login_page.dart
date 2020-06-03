@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _LoginPage();
+  }
+}
+
+class _LoginPage extends State<LoginPage> {
   final TextEditingController _userNameEditingController =
       TextEditingController();
   final TextEditingController _passwordEditingController =
       TextEditingController();
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +55,26 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   RaisedButton(
-                    color: Colors.blue[900],
-                    onPressed: () {},
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+                      color: Colors.blue[900],
+                      onPressed: () {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                      child: isLoading
+                          ? Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          : Container(
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.lightBlue),
+                              ),
+                              width: 25,
+                              height: 25,
+                            )),
                   Container(
                     padding: EdgeInsets.only(top: 15),
                     child: Text('New User?'),
