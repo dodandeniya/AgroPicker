@@ -1,0 +1,14 @@
+{
+  "folders": [
+	{
+		"path": "agro_picker_consumer"
+	},
+	{
+		"path": "agro_picker_bloc"
+	},
+	{
+		"path": "agro_picker_producer"
+	}
+],
+  "settings": {}
+}
