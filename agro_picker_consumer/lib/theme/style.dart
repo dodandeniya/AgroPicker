@@ -7,7 +7,7 @@ ThemeData appTheme() {
     accentColor: Color(0xFFFF970D),
     hintColor: Colors.black26,
     dividerColor: Colors.white,
-    buttonColor: Colors.white,
+    buttonColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
     textTheme: GoogleFonts.robotoMonoTextTheme(
       TextTheme(
