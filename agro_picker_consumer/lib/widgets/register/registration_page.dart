@@ -27,7 +27,7 @@ class _RegistrationPage extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
