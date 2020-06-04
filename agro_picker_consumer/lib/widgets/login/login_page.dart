@@ -18,7 +18,6 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Colors.greenAccent,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -55,7 +54,6 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                   RaisedButton(
-                      color: Colors.blue[900],
                       onPressed: () {
                         setState(() {
                           isLoading = false;
@@ -64,7 +62,6 @@ class _LoginPage extends State<LoginPage> {
                       child: isLoading
                           ? Text(
                               'Sign In',
-                              style: TextStyle(color: Colors.white),
                             )
                           : Container(
                               child: CircularProgressIndicator(

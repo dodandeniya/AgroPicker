@@ -1,3 +1,4 @@
+import 'package:agro_picker_consumer/theme/style.dart';
 import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Agro Picker',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: appTheme(),
       home: Login(),
     );
   }
