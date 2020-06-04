@@ -1,3 +1,4 @@
+import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -77,12 +78,21 @@ class _LoginPage extends State<LoginPage> {
                     child: Text('New User?'),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Text(
-                      'Registration',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
+                      padding: EdgeInsets.only(top: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => Registration()));
+                        },
+                        child: Text(
+                          'Registration',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).buttonColor),
+                        ),
+                      )),
                 ],
               ),
             ),
