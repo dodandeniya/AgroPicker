@@ -6,7 +6,7 @@ ThemeData appTheme() {
     accentColor: Colors.orange,
     hintColor: Colors.black26,
     dividerColor: Colors.white,
-    buttonColor: Colors.white,
+    buttonColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
     buttonTheme: ButtonThemeData(
            buttonColor: Colors.blueAccent,
