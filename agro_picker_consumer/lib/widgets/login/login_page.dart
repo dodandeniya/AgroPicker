@@ -1,5 +1,6 @@
 import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,22 +19,24 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Center(
-              child: Image.asset('assets/logo.png'),
+              child: Image.asset('assets/images/logo.png'),
             ),
-            Center(
+            Card(
+              elevation: 4,
               child: Column(
                 children: <Widget>[
                   Container(
+                    margin: EdgeInsets.only(top: 25),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: TextFormField(
                       controller: _userNameEditingController,
                       decoration: InputDecoration(
                         hintText: 'User Name',
+                        hintStyle: Theme.of(context).textTheme.caption,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         contentPadding: EdgeInsets.only(
@@ -47,6 +50,7 @@ class _LoginPage extends State<LoginPage> {
                       controller: _passwordEditingController,
                       decoration: InputDecoration(
                         hintText: 'Password',
+                        hintStyle: Theme.of(context).textTheme.caption,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         contentPadding: EdgeInsets.only(
@@ -54,7 +58,12 @@ class _LoginPage extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  RaisedButton(
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    child: RaisedButton(
+                      textTheme: ButtonTextTheme.primary,
                       onPressed: () {
                         setState(() {
                           isLoading = false;
@@ -62,7 +71,7 @@ class _LoginPage extends State<LoginPage> {
                       },
                       child: isLoading
                           ? Text(
-                              'Sign In',
+                              'LOGIN',
                             )
                           : Container(
                               child: CircularProgressIndicator(
@@ -72,30 +81,33 @@ class _LoginPage extends State<LoginPage> {
                               ),
                               width: 25,
                               height: 25,
-                            )),
-                  Container(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Text('New User?'),
-                  ),
-                  Container(
-                      padding: EdgeInsets.only(top: 15),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => Registration()));
-                        },
-                        child: Text(
-                          'Registration',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).buttonColor),
-                        ),
-                      )),
+                            ),
+                    ),
+                  )
                 ],
               ),
             ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                children: <Widget>[
+                  Text('New User?',
+                      style: Theme.of(context).textTheme.bodyText1),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {},
+                      child: Text(
+                        'REGISTER',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
