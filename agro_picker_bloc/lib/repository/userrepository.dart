@@ -1,13 +1,14 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepository {
-  final FirebaseAuth _firebaseAuth;
+  static FirebaseAppSingleton firebaseAppSingleton = FirebaseAppSingleton.getInstance();
+  final FirebaseAuth _firebaseAuth = firebaseAppSingleton.firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn();
+      : _googleSignIn = googleSignIn ?? GoogleSignIn();
 
   Future<FirebaseUser> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
