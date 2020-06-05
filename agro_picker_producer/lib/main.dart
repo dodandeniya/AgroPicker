@@ -25,12 +25,12 @@ class Main extends StatelessWidget {
       title: 'Agro Picker',
       theme: appTheme(),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (c, s) {
-          if (s is Uninitialized) {
+        builder: (context, state) {
+          if (state is Uninitialized) {
             return SplashScreen();
           }
-          if (s is Authenticated) {
-            return HomeScreen(name: s.displayName);
+          if (state is Authenticated) {
+            return HomeScreen(name: state.displayName);
           }
           return Login();
         },
