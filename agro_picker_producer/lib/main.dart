@@ -1,5 +1,4 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
-import 'package:agro_picker_producer/appBlocDelegate.dart';
 import 'package:agro_picker_producer/theme/style.dart';
 import 'package:agro_picker_producer/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +10,7 @@ Future<void> main() async {
   FirebaseAppSingleton _firebaseApp = FirebaseAppSingleton.getInstance();
   await _firebaseApp.createFirebaseConnection();
 
-  BlocSupervisor.delegate = AppBlocDelegate();
+  BlocSupervisor.delegate = AgroBlocDelegate();
   runApp(BlocProvider(
       create: (context) => AuthenticationBloc()..add(AppStarted()),
       child: Main()));
