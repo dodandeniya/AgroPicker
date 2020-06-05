@@ -30,7 +30,7 @@ class Main extends StatelessWidget {
           }
 
           if (state is Authenticated) {
-            //return HomeScreen(name: state.displayName);
+            return Dashboard(name: state.displayName);
           }
           
           return Login();
