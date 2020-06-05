@@ -1,6 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 
-class AppBlocDelegate extends BlocDelegate {
+class AgroBlocDelegate extends BlocDelegate {
   @override
   void onEvent(Bloc bloc, Object event) {
     print(event);

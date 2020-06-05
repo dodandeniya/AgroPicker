@@ -17,3 +17,4 @@ dependencies:
   firebase_auth: ^0.16.1
   google_sign_in: ^4.5.1
   meta: ^1.1.8
+  rxdart: ^0.24.1
