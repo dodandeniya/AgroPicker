@@ -13,3 +13,7 @@ dependencies:
   bloc: ^4.0.0
   flutter_bloc: ^4.0.0
   cloud_firestore: ^0.13.5
+  firebase_core: ^0.4.5
+  firebase_auth: ^0.16.1
+  google_sign_in: ^4.5.1
+  meta: ^1.1.8
