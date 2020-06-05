@@ -26,8 +26,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     final isSignedIn = await _userRepository.isSignedIn();
     if (isSignedIn) {
       final name = await _userRepository.getUser();
+      await Future<void>.delayed(Duration(seconds: 5));
       yield Authenticated(name);
     } else {
+      await Future<void>.delayed(Duration(seconds: 5));
       yield Unauthenticated();
     }
   }

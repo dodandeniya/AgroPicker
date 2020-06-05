@@ -5,7 +5,9 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-         body: Center(child: Text('Splash Screen')),
+         body: Center(
+            child: CircularProgressIndicator(),
+         ),
       ),
     );
   }
