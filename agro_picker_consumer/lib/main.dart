@@ -32,10 +32,6 @@ class Main extends StatelessWidget {
           if (state is Authenticated) {
             return Dashboard(name: state.displayName);
           }
-          
-          if (state is Unauthenticated) {
-            return Login();
-          }
 
           return Login();
         },
