@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseAppSingleton {
@@ -10,6 +11,7 @@ class FirebaseAppSingleton {
   static FirebaseAppSingleton getInstance() => _firebaseAppSingleton;
 
   Firestore firestore;
+  FirebaseAuth firebaseAuth;
 
   Future<void> createFirebaseConnection() async {
     final FirebaseApp app = await FirebaseApp.configure(
@@ -22,5 +24,6 @@ class FirebaseAppSingleton {
     );
 
     firestore = Firestore(app: app);
+    firebaseAuth = FirebaseAuth.fromApp(app);
   }
 }
