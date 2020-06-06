@@ -17,6 +17,8 @@ Future<void> main() async {
 }
 
 class Main extends StatelessWidget {
+  UserStatusSingleton _userStatusSingleton =  UserStatusSingleton.getInstance();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +32,8 @@ class Main extends StatelessWidget {
           }
 
           if (state is Authenticated) {
-            return Dashboard(name: state.displayName);
+            _userStatusSingleton.setUserStatus(state.displayName);
+            return Dashboard();
           }
 
           return Login();
