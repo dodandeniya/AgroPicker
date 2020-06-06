@@ -3,8 +3,10 @@ import 'package:agro_picker_producer/agro_picker_producer.dart';
 
 class RegistrationPage extends StatefulWidget {
   final int stepIndex;
+  final List<Step> steps;
+  final GlobalKey<FormState> formKey;
 
-  RegistrationPage({this.stepIndex});
+  RegistrationPage({this.stepIndex, this.steps, this.formKey});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,10 +26,6 @@ class _RegistrationPage extends State<RegistrationPage> {
       TextEditingController();
   final TextEditingController _genderEditingController =
       TextEditingController();
-  bool isLoading = true;
-  final _formKey = GlobalKey<FormState>();
-  int stepIndex = 0;
-  List<Step> steps = [];
 
   @override
   void initState() {
@@ -39,21 +37,16 @@ class _RegistrationPage extends State<RegistrationPage> {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Container(
-        height: 500,
-        margin: EdgeInsets.only(top: 10),
+        height: MediaQuery.of(context).size.height,
         child: Stepper(
+            physics: AlwaysScrollableScrollPhysics(),
             type: StepperType.horizontal,
             currentStep: widget.stepIndex,
             steps: getSteps(context),
-            onStepContinue: () {},
-            onStepCancel: () {},
             controlsBuilder: (context,
                     {VoidCallback onStepContinue, VoidCallback onStepCancel}) =>
                 Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 50,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
@@ -68,10 +61,12 @@ class _RegistrationPage extends State<RegistrationPage> {
   }
 
   List<Step> getSteps(BuildContext context) {
-    steps = [
+    return [
       Step(
         title: Container(),
-        content: Text('General Information'),
+        content: RegistrationGeneralInformation(
+          formKey: widget.formKey,
+        ),
         state: _getState(0),
       ),
       Step(
@@ -85,24 +80,15 @@ class _RegistrationPage extends State<RegistrationPage> {
         state: _getState(2),
       ),
     ];
-
-    return steps;
   }
 
   StepState _getState(int index) {
     if (widget.stepIndex > index) {
       return StepState.complete;
     }
+    if (widget.stepIndex == index) {
+      return StepState.editing;
+    }
     return StepState.indexed;
   }
-
-  void stepNext() {
-    setState(() {
-      if (stepIndex != steps.length) {
-        stepIndex++;
-      }
-    });
-  }
-
-  void stepPrevious() {}
 }

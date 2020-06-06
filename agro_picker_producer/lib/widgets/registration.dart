@@ -11,11 +11,14 @@ class Registration extends StatefulWidget {
 class _Registration extends State<Registration> {
   int stepIndex = 0;
   int stepsCount = 3;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        primary: true,
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Register'),
         ),
@@ -23,17 +26,12 @@ class _Registration extends State<Registration> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Column(
-            children: <Widget>[
-              SingleChildScrollView(
-                child: RegistrationPage(
-                  stepIndex: stepIndex,
-                ),
-              ),
-            ],
+          child: RegistrationPage(
+            stepIndex: stepIndex,
+            formKey: _formKey,
           ),
         ),
-        bottomSheet: Card(
+        bottomNavigationBar: Card(
           elevation: 2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,9 +53,11 @@ class _Registration extends State<Registration> {
                   ? FlatButton(onPressed: () {}, child: Text('Finish'))
                   : FlatButton(
                       onPressed: () {
-                        setState(() {
-                          stepIndex++;
-                        });
+                        if (_formKey.currentState.validate()) {
+                          setState(() {
+                            stepIndex++;
+                          });
+                        }
                       },
                       child: Text('Next'))
             ],
