@@ -35,10 +35,6 @@ class Main extends StatelessWidget {
             _userStatusSingleton.setUserStatus(state.displayName);
             return Dashboard();
           }
-          
-          if (state is Unauthenticated) {
-            return Login();
-          }
 
           return Login();
         },
