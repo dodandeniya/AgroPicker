@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Dashboard extends StatelessWidget {
-  final String name;
 
-  Dashboard({Key key, @required this.name}) : super(key: key);
+  static UserStatusSingleton _userStatusSingleton =  UserStatusSingleton.getInstance();
+  final String name = _userStatusSingleton.userEmail;
 
   @override
   Widget build(BuildContext context) {
