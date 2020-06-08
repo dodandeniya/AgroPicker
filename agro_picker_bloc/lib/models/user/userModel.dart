@@ -15,12 +15,11 @@ class UserModel {
   String address;
   UserLocation location;
   String email;
-  String password;
   String nic;
   int role;
 
-  UserModel(this.userName, this.firstName, this.lastName, this.displayName, 
-    this.email, this.password, this.role, {this.userId, this.address, this.location, this.nic});
+  UserModel(this.userId, this.userName, this.firstName, this.lastName, this.displayName, 
+    this.email, this.role, { this.address, this.location, this.nic});
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
