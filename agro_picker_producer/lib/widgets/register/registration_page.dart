@@ -24,8 +24,7 @@ class _RegistrationPage extends State<RegistrationPage> {
       TextEditingController();
   final TextEditingController _provinceEditingController =
       TextEditingController();
-  final TextEditingController _genderEditingController =
-      TextEditingController();
+  String dropDownValue;
 
   @override
   void initState() {
@@ -66,6 +65,12 @@ class _RegistrationPage extends State<RegistrationPage> {
         title: Container(),
         content: RegistrationGeneralInformation(
           formKey: widget.formKey,
+          userNameController: _nameEditingController,
+          mobileController: _mobileNumberEditingController,
+          nicController: _nicPassportEditingController,
+          provinceController: _provinceEditingController,
+          dropDownChange: dropDownChange,
+          dropDownValue: dropDownValue,
         ),
         state: _getState(0),
       ),
@@ -90,5 +95,11 @@ class _RegistrationPage extends State<RegistrationPage> {
       return StepState.editing;
     }
     return StepState.indexed;
+  }
+
+  void dropDownChange(String selected) {
+    setState(() {
+      dropDownValue = selected;
+    });
   }
 }
