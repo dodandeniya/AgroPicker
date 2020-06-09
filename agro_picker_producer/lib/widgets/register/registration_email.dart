@@ -1,4 +1,5 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:agro_picker_bloc/validators/validators.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationEmail extends StatefulWidget {

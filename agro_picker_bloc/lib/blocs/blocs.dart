@@ -4,4 +4,7 @@ export 'authentication_bloc/authentication_state.dart';
 export 'login_bloc/login_bloc.dart';
 export 'login_bloc/login_event.dart';
 export 'login_bloc/login_state.dart';
+export 'register_bloc/register_bloc.dart';
+export 'register_bloc/register_event.dart';
+export 'register_bloc/register_state.dart';
 export 'agro_bloc_delegate.dart';
