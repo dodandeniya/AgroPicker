@@ -1,11 +1,13 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+
 class UserStatusSingleton{
   static final UserStatusSingleton userStatusSingleton =
       UserStatusSingleton._internal();
   static UserStatusSingleton getInstance() => userStatusSingleton;
   UserStatusSingleton._internal();
-  String userEmail; // will replase with usermodel object
+  UserModel user;
 
-  void setUserStatus(String userID )  {
-    userEmail = userID;
+  void setUserStatus(UserModel user )  {
+    this.user = user;
   }
 }
