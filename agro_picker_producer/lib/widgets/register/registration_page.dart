@@ -3,10 +3,12 @@ import 'package:agro_picker_producer/agro_picker_producer.dart';
 
 class RegistrationPage extends StatefulWidget {
   final int stepIndex;
-  final List<Step> steps;
-  final GlobalKey<FormState> formKey;
+  final GlobalKey<FormState> genInfoKey;
+  final GlobalKey<FormState> emailKey;
+  final GlobalKey<FormState> passwordKey;
 
-  RegistrationPage({this.stepIndex, this.steps, this.formKey});
+  RegistrationPage(
+      {this.stepIndex, this.genInfoKey, this.emailKey, this.passwordKey});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,13 +20,18 @@ class _RegistrationPage extends State<RegistrationPage> {
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _passwordEditingController =
       TextEditingController();
+  final TextEditingController _confirmPasswordEditingController =
+      TextEditingController();
   final TextEditingController _mobileNumberEditingController =
       TextEditingController();
   final TextEditingController _nicPassportEditingController =
       TextEditingController();
   final TextEditingController _provinceEditingController =
       TextEditingController();
-  String dropDownValue;
+  final TextEditingController _emailEditingController = TextEditingController();
+  final TextEditingController _userNameEditingController =
+      TextEditingController();
+  String genderDropDownValue;
 
   @override
   void initState() {
@@ -64,24 +71,32 @@ class _RegistrationPage extends State<RegistrationPage> {
       Step(
         title: Container(),
         content: RegistrationGeneralInformation(
-          formKey: widget.formKey,
+          formKey: widget.genInfoKey,
           userNameController: _nameEditingController,
           mobileController: _mobileNumberEditingController,
           nicController: _nicPassportEditingController,
           provinceController: _provinceEditingController,
-          dropDownChange: dropDownChange,
-          dropDownValue: dropDownValue,
+          genderDropDownChange: genderDropDownChange,
+          genderDropDownValue: genderDropDownValue,
         ),
         state: _getState(0),
       ),
       Step(
         title: Container(),
-        content: Text('General Information1'),
+        content: RegistrationEmail(
+          emailController: _emailEditingController,
+          userNameController: _userNameEditingController,
+          formKey: widget.emailKey,
+        ),
         state: _getState(1),
       ),
       Step(
         title: Container(),
-        content: Text('General Information2'),
+        content: RegistrationPassword(
+          confirmPasswordController: _confirmPasswordEditingController,
+          passwordController: _passwordEditingController,
+          formKey: widget.passwordKey,
+        ),
         state: _getState(2),
       ),
     ];
@@ -97,9 +112,22 @@ class _RegistrationPage extends State<RegistrationPage> {
     return StepState.indexed;
   }
 
-  void dropDownChange(String selected) {
+  void genderDropDownChange(String selected) {
     setState(() {
-      dropDownValue = selected;
+      genderDropDownValue = selected;
     });
+  }
+
+  @override
+  void dispose() {
+    _userNameEditingController.dispose();
+    _confirmPasswordEditingController.dispose();
+    _emailEditingController.dispose();
+    _mobileNumberEditingController.dispose();
+    _nameEditingController.dispose();
+    _nicPassportEditingController.dispose();
+    _passwordEditingController.dispose();
+    _provinceEditingController.dispose();
+    super.dispose();
   }
 }

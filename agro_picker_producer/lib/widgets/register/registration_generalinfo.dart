@@ -6,8 +6,8 @@ class RegistrationGeneralInformation extends StatefulWidget {
   final TextEditingController nicController;
   final TextEditingController provinceController;
   final TextEditingController mobileController;
-  final Function dropDownChange;
-  final String dropDownValue;
+  final Function genderDropDownChange;
+  final String genderDropDownValue;
 
   RegistrationGeneralInformation(
       {this.formKey,
@@ -15,8 +15,8 @@ class RegistrationGeneralInformation extends StatefulWidget {
       this.nicController,
       this.provinceController,
       this.mobileController,
-      this.dropDownChange,
-      this.dropDownValue});
+      this.genderDropDownChange,
+      this.genderDropDownValue});
 
   @override
   State<StatefulWidget> createState() {
@@ -69,7 +69,7 @@ class _RegistrationGeneralInformation
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: DropdownButtonFormField<String>(
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return 'Please Select Gender';
                     }
                     return null;
@@ -85,9 +85,10 @@ class _RegistrationGeneralInformation
                   iconSize: 24,
                   elevation: 24,
                   onChanged: (String newValue) {
-                    widget.dropDownChange(newValue);
+                    widget.genderDropDownChange(newValue);
+                    FocusScope.of(context).nextFocus();
                   },
-                  value: widget.dropDownValue,
+                  value: widget.genderDropDownValue,
                   items: genderList
                       .map<DropdownMenuItem<String>>(
                         (e) => DropdownMenuItem<String>(

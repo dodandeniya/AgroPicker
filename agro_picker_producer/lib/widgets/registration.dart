@@ -11,7 +11,9 @@ class Registration extends StatefulWidget {
 class _Registration extends State<Registration> {
   int stepIndex = 0;
   int stepsCount = 3;
-  final _formKey = GlobalKey<FormState>();
+  final _genInfoFormKey = GlobalKey<FormState>();
+  final _emailFormKey = GlobalKey<FormState>();
+  final _passwordFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class _Registration extends State<Registration> {
           },
           child: RegistrationPage(
             stepIndex: stepIndex,
-            formKey: _formKey,
+            genInfoKey: _genInfoFormKey,
+            emailKey: _emailFormKey,
+            passwordKey: _passwordFormKey,
           ),
         ),
         bottomNavigationBar: Card(
@@ -50,13 +54,25 @@ class _Registration extends State<Registration> {
                       },
                       child: Text('Previous')),
               stepIndex == stepsCount - 1
-                  ? FlatButton(onPressed: () {}, child: Text('Finish'))
+                  ? FlatButton(
+                      onPressed: () {
+                        if (_passwordFormKey.currentState.validate()) {}
+                      },
+                      child: Text('Finish'))
                   : FlatButton(
                       onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          setState(() {
-                            stepIndex++;
-                          });
+                        if (stepIndex == 0) {
+                          if (_genInfoFormKey.currentState.validate()) {
+                            setState(() {
+                              stepIndex++;
+                            });
+                          }
+                        } else if (stepIndex == 1) {
+                          if (_emailFormKey.currentState.validate()) {
+                            setState(() {
+                              stepIndex++;
+                            });
+                          }
                         }
                       },
                       child: Text('Next'))

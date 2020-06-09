@@ -6,3 +6,5 @@ export 'splashscreen.dart';
 export 'home.dart';
 export 'home/homescreen.dart';
 export 'register/registration_generalinfo.dart';
+export 'register/registration_email.dart';
+export 'register/registration_password.dart';
