@@ -1,4 +1,5 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:agro_picker_producer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -140,7 +141,14 @@ class _LoginPage extends State<LoginPage> {
                             EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: RaisedButton(
                           color: Theme.of(context).accentColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Registration(),
+                              ),
+                            );
+                          },
                           child: Text(
                             'REGISTER',
                             style: TextStyle(color: Colors.white),
