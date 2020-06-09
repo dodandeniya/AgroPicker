@@ -1,10 +1,12 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepository {
   static FirebaseAppSingleton firebaseAppSingleton = FirebaseAppSingleton.getInstance();
   final FirebaseAuth _firebaseAuth = firebaseAppSingleton.firebaseAuth;
+  final CollectionReference _userCollection = firebaseAppSingleton.firestore.collection('person');
   final GoogleSignIn _googleSignIn;
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
@@ -50,5 +52,18 @@ class UserRepository {
 
   Future<String> getUser() async {
     return (await _firebaseAuth.currentUser()).email;
+  }
+  
+   getUserDataStream() async*{
+    var docId = (await _firebaseAuth.currentUser()).uid;
+    yield* _userCollection.document(docId).snapshots();
+  }
+
+  Future<DocumentReference> addUser(UserModel user){
+    return _userCollection.add(user.toJson());
+  }
+
+  updateUser(UserModel user) async {
+    await _userCollection.document(user.userId).updateData(user.toJson());
   }
 }
