@@ -9,7 +9,7 @@ ThemeData appTheme() {
     dividerColor: Colors.white,
     buttonColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
-    textTheme: GoogleFonts.robotoMonoTextTheme(
+    textTheme: GoogleFonts.robotoTextTheme(
       TextTheme(
         button: TextStyle(fontWeight: FontWeight.bold),
         bodyText1: TextStyle(fontWeight: FontWeight.bold),
