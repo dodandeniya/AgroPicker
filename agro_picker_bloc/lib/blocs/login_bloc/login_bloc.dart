@@ -71,7 +71,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginState.loading();
     try {
       await _userRepository.signInWithCredentials(email, password);
-      yield LoginState.success();
+      var isEmailVerified = await _userRepository.isEmailVerified();
+      if (isEmailVerified) {
+        yield LoginState.success();
+      } else {
+        yield LoginState.emailVerificationPending();
+      }
     } catch (_) {
       yield LoginState.failure();
     }

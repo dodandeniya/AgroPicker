@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepository {
-  static FirebaseAppSingleton firebaseAppSingleton = FirebaseAppSingleton.getInstance();
+  static FirebaseAppSingleton firebaseAppSingleton =
+      FirebaseAppSingleton.getInstance();
   final FirebaseAuth _firebaseAuth = firebaseAppSingleton.firebaseAuth;
-  final CollectionReference _userCollection = firebaseAppSingleton.firestore.collection('person');
+  final CollectionReference _userCollection =
+      firebaseAppSingleton.firestore.collection('person');
   final GoogleSignIn _googleSignIn;
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
@@ -31,7 +35,7 @@ class UserRepository {
     );
   }
 
-  Future<void> signUp({String email, String password}) async {
+  Future<AuthResult> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -47,23 +51,51 @@ class UserRepository {
 
   Future<bool> isSignedIn() async {
     final currentUser = await _firebaseAuth.currentUser();
-    return currentUser != null;
+    return currentUser != null && !currentUser.isEmailVerified;
   }
 
   Future<String> getUser() async {
     return (await _firebaseAuth.currentUser()).email;
   }
-  
-  getUserDataStream() async*{
+
+  getUserDataStream() async* {
     var docId = (await _firebaseAuth.currentUser()).uid;
     yield* _userCollection.document(docId).snapshots();
   }
 
-  Future<DocumentReference> addUser(UserModel user){
+  Future<DocumentReference> addUser(UserModel user) {
     return _userCollection.add(user.toJson());
   }
 
   updateUser(UserModel user) async {
     await _userCollection.document(user.userId).updateData(user.toJson());
+  }
+
+  Future<void> sendEmailVerification() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    currentUser.sendEmailVerification();
+  }
+
+  Future<bool> isEmailVerified() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    currentUser.reload();
+    if (currentUser.isEmailVerified) {
+      return true;
+    }
+    return false;
+  }
+
+  Stream<bool> isEmailVerifiedOb() async* {
+    final currentUser = await _firebaseAuth.currentUser();
+    var controller = StreamController<bool>();
+    currentUser.reload();
+
+    if (currentUser.isEmailVerified) {
+      controller.sink.add(true);
+      yield* controller.stream;
+      controller.close();
+    } else {
+      yield* isEmailVerifiedOb();
+    }
   }
 }
