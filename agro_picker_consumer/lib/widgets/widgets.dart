@@ -4,4 +4,6 @@ export 'splash.dart';
 export 'dashboard.dart';
 export 'login/login_page.dart';
 export 'register/registration_page.dart';
+export 'register/registration_email.dart';
+export 'register/registration_success.dart';
 export 'dashboard/dashboard_page.dart';
