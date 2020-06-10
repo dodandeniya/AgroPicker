@@ -1,4 +1,3 @@
-
 import 'package:agro_picker_bloc/blocs/blocs.dart';
 import 'package:agro_picker_bloc/repository/repository.dart';
 import 'package:agro_picker_bloc/validators/validators.dart';
@@ -6,7 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
- final UserRepository _userRepository = UserRepository();
+  final UserRepository _userRepository = UserRepository();
 
   @override
   RegisterState get initialState => RegisterState.empty();
@@ -17,10 +16,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     TransitionFunction<RegisterEvent, RegisterState> transitionFn,
   ) {
     final nonDebounceStream = events.where((event) {
-      return (event is! RegisterEmailChanged && event is! RegisterPasswordChanged);
+      return (event is! RegisterEmailChanged &&
+          event is! RegisterPasswordChanged);
     });
     final debounceStream = events.where((event) {
-      return (event is RegisterEmailChanged || event is RegisterPasswordChanged);
+      return (event is RegisterEmailChanged ||
+          event is RegisterPasswordChanged);
     }).debounceTime(Duration(milliseconds: 300));
     return super.transformEvents(
       nonDebounceStream.mergeWith([debounceStream]),
@@ -63,6 +64,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         email: email,
         password: password,
       );
+      await _userRepository.sendEmailVerification();
+      await _userRepository.signOut();
       yield RegisterState.success();
     } catch (_) {
       yield RegisterState.failure();

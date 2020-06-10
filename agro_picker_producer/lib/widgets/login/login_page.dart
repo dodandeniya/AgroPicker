@@ -51,7 +51,27 @@ class _LoginPage extends State<LoginPage> {
               isLoading = false;
             });
           }
-          if (state.isSuccess) {
+          if (!state.isEmailVerified && state.isSuccess) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Email Address has not been verified yet.'),
+                      Icon(Icons.error)
+                    ],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            setState(() {
+              isLoading = true;
+            });
+          }
+          if (state.isSuccess && state.isEmailVerified) {
             BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           }
         },
@@ -86,6 +106,7 @@ class _LoginPage extends State<LoginPage> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: TextFormField(
+                          obscureText: true,
                           controller: _passwordEditingController,
                           decoration: InputDecoration(
                             hintText: 'Password',

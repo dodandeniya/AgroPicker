@@ -7,6 +7,7 @@ class LoginState {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
+  final bool isEmailVerified;
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
@@ -16,6 +17,7 @@ class LoginState {
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
+    @required this.isEmailVerified,
   });
 
   factory LoginState.empty() {
@@ -25,6 +27,7 @@ class LoginState {
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
+      isEmailVerified: false,
     );
   }
 
@@ -35,6 +38,7 @@ class LoginState {
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
+      isEmailVerified: false,
     );
   }
 
@@ -45,6 +49,7 @@ class LoginState {
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
+      isEmailVerified: false,
     );
   }
 
@@ -55,6 +60,18 @@ class LoginState {
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
+      isEmailVerified: true,
+    );
+  }
+
+  factory LoginState.emailVerificationPending() {
+    return LoginState(
+      isEmailValid: true,
+      isPasswordValid: true,
+      isSubmitting: false,
+      isSuccess: true,
+      isFailure: false,
+      isEmailVerified: false,
     );
   }
 
@@ -85,6 +102,7 @@ class LoginState {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
     );
   }
 
@@ -96,6 +114,7 @@ class LoginState {
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
+      isEmailVerified: $isEmailVerified,
     }''';
   }
 }
