@@ -54,7 +54,7 @@ class UserRepository {
     return (await _firebaseAuth.currentUser()).email;
   }
   
-   getUserDataStream() async*{
+  getUserDataStream() async*{
     var docId = (await _firebaseAuth.currentUser()).uid;
     yield* _userCollection.document(docId).snapshots();
   }

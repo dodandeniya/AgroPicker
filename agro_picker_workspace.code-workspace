@@ -10,5 +10,7 @@
 		"path": "agro_picker_producer"
 	}
 ],
-  "settings": {}
+"settings": {
+	"editor.formatOnSave": true
+}
 }
