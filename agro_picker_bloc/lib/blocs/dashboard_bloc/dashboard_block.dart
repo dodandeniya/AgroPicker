@@ -14,8 +14,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   ) async* {
     if (event is StartUpdateDashboard) {
       yield UpdateDashboardLoading();
-      _userRepository.getUserDataStream().listen((onData) =>
-          add(UpdateDashboardEvent(UserModel.fromJson(onData.data))));
+      _userRepository.getUserDataStream().listen(
+          (onData) => add(UpdateDashboardEvent(Users.fromJson(onData.data))));
     }
 
     if (event is UpdateDashboardEvent) {

@@ -1,8 +1,7 @@
-
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class DashboardState extends Equatable{
+abstract class DashboardState extends Equatable {
   const DashboardState();
 
   @override
@@ -14,7 +13,7 @@ class DashboardUpdateEmpty extends DashboardState {}
 class UpdateDashboardLoading extends DashboardState {}
 
 class UpdateDashboard extends DashboardState {
-  final UserModel user;
+  final Users user;
   const UpdateDashboard(this.user);
 
   @override
