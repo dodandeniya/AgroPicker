@@ -1,4 +1,5 @@
 import 'package:agro_picker_bloc/blocs/blocs.dart';
+import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,7 +51,27 @@ class _LoginPage extends State<LoginPage> {
               isLoading = false;
             });
           }
-          if (state.isSuccess) {
+          if (!state.isEmailVerified && state.isSuccess) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Email Address has not been verified yet.'),
+                      Icon(Icons.error)
+                    ],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            setState(() {
+              isLoading = true;
+            });
+          }
+          if (state.isSuccess && state.isEmailVerified) {
             BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           }
         },
@@ -141,7 +162,14 @@ class _LoginPage extends State<LoginPage> {
                             EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: RaisedButton(
                           color: Theme.of(context).accentColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Registration(),
+                              ),
+                            );
+                          },
                           child: Text(
                             'REGISTER',
                             style: TextStyle(color: Colors.white),
