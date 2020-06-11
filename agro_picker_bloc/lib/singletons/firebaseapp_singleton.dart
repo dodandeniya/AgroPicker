@@ -17,9 +17,9 @@ class FirebaseAppSingleton {
     final FirebaseApp app = await FirebaseApp.configure(
       name: 'test',
       options: const FirebaseOptions(
-        googleAppID: '1:528382687007:android:7f93fab2275b6899aba22a',
-        apiKey: 'AIzaSyDKfvw_x7z1ejkpQtCCMMClKc-6Ka9FtMs',
-        projectID: 'travel-sl-12345',
+        googleAppID: '1:727905882714:android:4e651d69ff5993baa2be63',
+        apiKey: 'AIzaSyDQ0oDAZO3FVSritxDU3gGOOJsKw2o38Fg',
+        projectID: 'agropicker',
       ),
     );
 
