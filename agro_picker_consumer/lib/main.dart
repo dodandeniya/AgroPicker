@@ -1,5 +1,6 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_bloc/blocs/blocs.dart';
+import 'package:agro_picker_bloc/constants/firebase_interface.dart';
 import 'package:agro_picker_bloc/enums/enum.dart';
 import 'package:agro_picker_consumer/theme/style.dart';
 import 'package:agro_picker_consumer/widgets/widgets.dart';
@@ -31,8 +32,12 @@ class Main extends StatelessWidget {
             return SplashScreen();
           }
 
+          if (state is PendingProfileCompletion) {
+            addTempUser(context); // this will remove later.
+            return SplashScreen();
+          }
+
           if (state is Authenticated) {
-            addTempUser(); // this will remove later.
             return Dashboard();
           }
 
@@ -42,8 +47,9 @@ class Main extends StatelessWidget {
     );
   }
 
-  Future<void> addTempUser() async {
+  Future<void> addTempUser(BuildContext context) async {
     UserRepository userRepository = UserRepository();
+    FirebaseInterface db = FirebaseInterface();
     var fUser = await userRepository.getCurrentUser();
     GeoPoint pt = GeoPoint(5.12, 1.24);
     List<String> album = ['a', 'b'];
@@ -53,8 +59,9 @@ class Main extends StatelessWidget {
 
     Users user = Users(fUser.uid, 1, 'cham', 'Chamara', 'Dodandeniya', 'ccc',
         Gender.Male, '071555', ad, fUser.email,
-        location: pt, agroProfile: ap);
+        location: pt, agroProfile: ap, isProfileCompleted: true);
 
-    await userRepository.addUser(user);
+    await db.insertDocumentData<Users>(user.toJson(), user.userId);
+    BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
   }
 }

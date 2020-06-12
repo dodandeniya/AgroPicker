@@ -72,7 +72,8 @@ class _LoginPage extends State<LoginPage> {
             });
           }
           if (state.isSuccess && state.isEmailVerified) {
-            BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+            BlocProvider.of<AuthenticationBloc>(context)
+                .add(CheckProfileCompleted());
           }
         },
         child: Container(
