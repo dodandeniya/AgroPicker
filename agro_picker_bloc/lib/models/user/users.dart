@@ -26,6 +26,8 @@ class Users {
   final BankDetails bankDetails;
   @JsonKey(name: 'dateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp dateTime;
+  final bool isProfileCompleted;
+  final bool isOnline;
 
   const Users(
       this.userId,
@@ -44,7 +46,9 @@ class Users {
       this.agroProfile,
       this.bankDetails,
       this.nic,
-      this.dateTime});
+      this.dateTime,
+      this.isOnline,
+      this.isProfileCompleted});
 
   static GeoPoint _geoDataFromJson(GeoPoint jsonObj) {
     if (jsonObj != null) {

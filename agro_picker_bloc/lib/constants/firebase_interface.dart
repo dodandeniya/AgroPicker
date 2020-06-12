@@ -29,7 +29,7 @@ class FirebaseInterface {
             element.queryMethod == QueryMethod.isNull)
         .toList();
 
-    if (arrayContainsArray.length > 0) {
+    /*if (arrayContainsArray.length > 0) {
       arrayContainsArray.forEach((element) {
         if (element.queryMethod == QueryMethod.arrayContainsAny) {
           if (!element.fieldValue.runtimeType is List) {
@@ -45,7 +45,7 @@ class FirebaseInterface {
           }
         }
       });
-    }
+    }*/
 
     parameters.forEach(
       (parameter) {
@@ -91,10 +91,39 @@ class FirebaseInterface {
     return collectionReference.snapshots();
   }
 
+  Future<bool> checkDocumentExist<T>(String docID) async {
+    var className = T.toString();
+    bool exists = false;
+    try {
+      await _firebaseAppSingleton.firestore
+          .collection(className)
+          .document(docID)
+          .get()
+          .then((doc) {
+        if (doc.exists)
+          exists = true;
+        else
+          exists = false;
+      });
+      return exists;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<DocumentReference> insertData<T>(
       Map<String, dynamic> insertValue) async {
     var className = T.toString();
     return await firestore.collection(className).add(insertValue);
+  }
+
+  Future<void> insertDocumentData<T>(
+      Map<String, dynamic> insertValue, String documentId) async {
+    var className = T.toString();
+    return await firestore
+        .collection(className)
+        .document(documentId)
+        .setData(insertValue);
   }
 
   Future<void> updateData<T>(

@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:agro_picker_bloc/constants/firebase_interface.dart';
 import 'package:bloc/bloc.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
-  final UserRepository _userRepository = UserRepository();
+  final FirebaseInterface db = FirebaseInterface();
+  final FirebaseAppSingleton _firebaseAppSingleton =
+      FirebaseAppSingleton.getInstance();
 
   @override
   DashboardState get initialState => DashboardUpdateEmpty();
@@ -14,7 +17,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   ) async* {
     if (event is StartUpdateDashboard) {
       yield UpdateDashboardLoading();
-      _userRepository.getUserDataStream().listen(
+      var docId = (await _firebaseAppSingleton.firebaseAuth.currentUser()).uid;
+      db.getObject<Users>(docId).listen(
           (onData) => add(UpdateDashboardEvent(Users.fromJson(onData.data))));
     }
 

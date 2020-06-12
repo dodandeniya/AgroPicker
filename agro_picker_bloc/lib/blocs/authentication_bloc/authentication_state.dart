@@ -21,4 +21,6 @@ class Authenticated extends AuthenticationState {
   String toString() => 'Authenticated { displayName: $displayName }';
 }
 
+class PendingProfileCompletion extends AuthenticationState {}
+
 class Unauthenticated extends AuthenticationState {}

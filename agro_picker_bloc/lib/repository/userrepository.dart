@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -9,8 +8,6 @@ class UserRepository {
   static FirebaseAppSingleton firebaseAppSingleton =
       FirebaseAppSingleton.getInstance();
   final FirebaseAuth _firebaseAuth = firebaseAppSingleton.firebaseAuth;
-  final CollectionReference _userCollection =
-      firebaseAppSingleton.firestore.collection('users');
   final GoogleSignIn _googleSignIn;
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
@@ -51,7 +48,7 @@ class UserRepository {
 
   Future<bool> isSignedIn() async {
     final currentUser = await _firebaseAuth.currentUser();
-    return currentUser != null && !currentUser.isEmailVerified;
+    return currentUser != null && currentUser.isEmailVerified;
   }
 
   Future<String> getUser() async {
@@ -60,19 +57,6 @@ class UserRepository {
 
   getCurrentUser() async {
     return await _firebaseAuth.currentUser();
-  }
-
-  getUserDataStream() async* {
-    var docId = (await _firebaseAuth.currentUser()).uid;
-    yield* _userCollection.document(docId).snapshots();
-  }
-
-  Future<void> addUser(Users user) {
-    return _userCollection.document(user.userId).setData(user.toJson());
-  }
-
-  updateUser(Users user) async {
-    await _userCollection.document(user.userId).updateData(user.toJson());
   }
 
   Future<void> sendEmailVerification() async {
