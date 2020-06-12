@@ -10,7 +10,7 @@ class UserRepository {
       FirebaseAppSingleton.getInstance();
   final FirebaseAuth _firebaseAuth = firebaseAppSingleton.firebaseAuth;
   final CollectionReference _userCollection =
-      firebaseAppSingleton.firestore.collection('person');
+      firebaseAppSingleton.firestore.collection('users');
   final GoogleSignIn _googleSignIn;
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
@@ -58,16 +58,20 @@ class UserRepository {
     return (await _firebaseAuth.currentUser()).email;
   }
 
+  getCurrentUser() async {
+    return await _firebaseAuth.currentUser();
+  }
+
   getUserDataStream() async* {
     var docId = (await _firebaseAuth.currentUser()).uid;
     yield* _userCollection.document(docId).snapshots();
   }
 
-  Future<DocumentReference> addUser(UserModel user) {
-    return _userCollection.add(user.toJson());
+  Future<void> addUser(Users user) {
+    return _userCollection.document(user.userId).setData(user.toJson());
   }
 
-  updateUser(UserModel user) async {
+  updateUser(Users user) async {
     await _userCollection.document(user.userId).updateData(user.toJson());
   }
 

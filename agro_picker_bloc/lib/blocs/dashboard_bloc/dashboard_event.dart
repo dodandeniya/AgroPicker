@@ -11,7 +11,7 @@ abstract class DashboardEvent extends Equatable {
 class StartUpdateDashboard extends DashboardEvent {}
 
 class UpdateDashboardEvent extends DashboardEvent {
-  final UserModel user;
+  final Users user;
   const UpdateDashboardEvent(this.user);
 
   @override

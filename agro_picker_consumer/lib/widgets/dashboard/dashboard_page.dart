@@ -10,7 +10,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashboardPage> {
-  UserModel user;
+  Users user;
   String name = '';
   DashboardBloc _dashboardBloc;
 
