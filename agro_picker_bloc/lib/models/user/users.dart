@@ -1,5 +1,3 @@
-//for build : 'flutter pub run build_runner build'
-
 import 'package:agro_picker_bloc/enums/enum.dart';
 import 'package:agro_picker_bloc/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
