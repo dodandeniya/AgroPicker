@@ -7,6 +7,7 @@ import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,9 +57,10 @@ class Main extends StatelessWidget {
     AgroProfile ap = AgroProfile(album: album);
 
     AddressDetails ad = AddressDetails('a', 'b', 'c', 'd', 1);
+    var uuid = Uuid();
 
     Users user = Users(fUser.uid, 1, 'cham', 'Chamara', 'Dodandeniya', 'ccc',
-        Gender.Male, '071555', ad, fUser.email,
+        Gender.Male, uuid.v1(), ad, fUser.email,
         location: pt, agroProfile: ap, isProfileCompleted: true);
 
     await db.insertDocumentData<Users>(user.toJson(), user.userId);
