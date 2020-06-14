@@ -74,7 +74,9 @@ class _Profile extends State<Profile> {
                       stepIndex == stepsCount - 1
                           ? FlatButton(
                               onPressed: () {
-                                profileController.completeProfile();
+                                if (businessInfoKey.currentState.validate()) {
+                                  profileController.completeProfile();
+                                }
                               },
                               child: Text('Finish'))
                           : FlatButton(
