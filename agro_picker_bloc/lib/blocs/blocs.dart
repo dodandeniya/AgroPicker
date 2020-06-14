@@ -13,4 +13,5 @@ export 'dashboard_bloc/dashboard_block.dart';
 export 'fileupload_bloc/fileupload_bloc.dart';
 export 'fileupload_bloc/fileupload_event.dart';
 export 'fileupload_bloc/fileupload_state.dart';
+export 'profile_bloc/profile_bloc.dart';
 export 'agro_bloc_delegate.dart';

@@ -9,9 +9,14 @@ class AgroProfile {
   final String regNumber;
   final List<String> album;
   final List<String> attachments;
+  final String businessRegistrationDoc;
 
   const AgroProfile(
-      {this.profileType, this.regNumber, this.album, this.attachments});
+      {this.profileType,
+      this.regNumber,
+      this.album,
+      this.attachments,
+      this.businessRegistrationDoc});
   factory AgroProfile.fromJson(Map<String, dynamic> json) =>
       _$AgroProfileFromJson(json);
 

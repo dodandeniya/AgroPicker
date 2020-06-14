@@ -7,7 +7,7 @@ part 'users.g.dart';
 
 @JsonSerializable(anyMap: true, explicitToJson: true)
 class Users {
-  final String userId;
+  String userId;
   final int role;
   final String userName;
   final String firstName;
@@ -15,7 +15,7 @@ class Users {
   final String initials;
   final String displayName;
   final Gender gender;
-  final String email;
+  String email;
   final String nic;
   final AddressDetails addressDetails;
   @JsonKey(name: 'location', fromJson: _geoDataFromJson, toJson: _geoDataToJson)
@@ -29,8 +29,8 @@ class Users {
   final bool isProfileCompleted;
   final bool isOnline;
 
-  const Users(
-      this.userId,
+  Users(
+      {this.userId,
       this.role,
       this.userName,
       this.firstName,
@@ -40,7 +40,7 @@ class Users {
       this.mobileNumber,
       this.addressDetails,
       this.email,
-      {this.initials,
+      this.initials,
       this.location,
       this.profileImage,
       this.agroProfile,

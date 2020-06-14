@@ -31,6 +31,12 @@ class Main extends StatelessWidget {
           if (state is Authenticated) {
             return HomeScreen(name: state.displayName);
           }
+          if (state is PendingProfileCompletion) {
+            return BlocProvider<ProfileBloc>(
+              create: (context) => ProfileBloc(),
+              child: Profile(),
+            );
+          }
           return Login();
         },
       ),
