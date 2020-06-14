@@ -32,7 +32,6 @@ dependencies:
   flutter_bloc: ^4.0.0
   google_fonts: ^1.1.0
   cloud_firestore: ^0.13.5
-  uuid: ^2.0.4
 
 dev_dependencies:
   flutter_test:
