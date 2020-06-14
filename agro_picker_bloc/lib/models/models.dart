@@ -7,3 +7,7 @@ export 'types/mesureTypeModel.dart';
 export 'types/growthTypeModel.dart';
 export 'category/categoryModel.dart';
 export 'product/products.dart';
+export 'product/productStores.dart';
+export 'product/storeStatus.dart';
+export 'orders/orders.dart';
+export 'orders/orderStatus.dart';

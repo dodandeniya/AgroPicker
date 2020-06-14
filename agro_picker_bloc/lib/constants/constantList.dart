@@ -16,3 +16,20 @@ const List<TypeModel> growthTypesList = [
   TypeModel(1, "Organic"),
   TypeModel(2, "Non Organic")
 ];
+
+const List<StoreStatus> storeStatusList = [
+  StoreStatus(1, "Available"),
+  StoreStatus(2, "Sold Out"),
+  StoreStatus(3, "Not Available")
+];
+
+const List<OrderStatus> orderStatusList = [
+  OrderStatus(1, "New Order"),
+  OrderStatus(2, "Confirmed"),
+  OrderStatus(3, "Preparing"),
+  OrderStatus(4, "Packaging"),
+  OrderStatus(5, "Collecting"),
+  OrderStatus(6, "On Route"),
+  OrderStatus(7, "Payment"),
+  OrderStatus(8, "Completed")
+];
