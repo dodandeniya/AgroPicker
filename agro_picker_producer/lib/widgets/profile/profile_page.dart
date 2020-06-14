@@ -10,12 +10,14 @@ class ProfilePage extends StatefulWidget {
   final int stepIndex;
   final GlobalKey<FormState> basicInfoKey;
   final GlobalKey<FormState> contactInfoKey;
+  final GlobalKey<FormState> businessInfoKey;
   final ProfileController profileController;
 
   ProfilePage(
       {this.stepIndex,
       this.basicInfoKey,
       this.contactInfoKey,
+      this.businessInfoKey,
       this.profileController});
 
   @override
@@ -108,6 +110,7 @@ class _ProfilePage extends State<ProfilePage> {
           getSelectedFile: getSelectedFile,
           profileTypeDropdownChange: profileTypeDropDownChange,
           profileTypeDropdownValue: profileTypeDropDownValue,
+          businessInfoKey: widget.businessInfoKey,
         ),
         state: _getState(2),
       ),

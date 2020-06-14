@@ -11,12 +11,15 @@ class ProfileBusinessInfo extends StatefulWidget {
   final Function getSelectedFile;
   final Function profileTypeDropdownChange;
   final String profileTypeDropdownValue;
+  final GlobalKey<FormState> businessInfoKey;
 
-  ProfileBusinessInfo(
-      {this.businessRegistrationController,
-      this.getSelectedFile,
-      this.profileTypeDropdownChange,
-      this.profileTypeDropdownValue});
+  ProfileBusinessInfo({
+    this.businessRegistrationController,
+    this.getSelectedFile,
+    this.profileTypeDropdownChange,
+    this.profileTypeDropdownValue,
+    this.businessInfoKey,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -40,6 +43,7 @@ class _ProfileBusinessInfo extends State<ProfileBusinessInfo> {
     return Column(
       children: <Widget>[
         Form(
+          key: widget.businessInfoKey,
           child: Column(
             children: <Widget>[
               Container(

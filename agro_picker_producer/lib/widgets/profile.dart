@@ -15,6 +15,7 @@ class _Profile extends State<Profile> {
   int stepsCount = 3;
   final GlobalKey<FormState> basicInfoKey = GlobalKey<FormState>();
   final GlobalKey<FormState> contactInfoKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> businessInfoKey = GlobalKey<FormState>();
   final ProfileController profileController = ProfileController();
 
   @override
@@ -44,6 +45,7 @@ class _Profile extends State<Profile> {
                   child: ProfilePage(
                     basicInfoKey: basicInfoKey,
                     contactInfoKey: contactInfoKey,
+                    businessInfoKey: businessInfoKey,
                     stepIndex: stepIndex,
                     profileController: profileController,
                   ),
