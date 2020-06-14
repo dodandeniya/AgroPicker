@@ -10,4 +10,5 @@ export 'register_bloc/register_state.dart';
 export 'dashboard_bloc/dashboard_state.dart';
 export 'dashboard_bloc/dashboard_event.dart';
 export 'dashboard_bloc/dashboard_block.dart';
+export 'profile_bloc/profile_bloc.dart';
 export 'agro_bloc_delegate.dart';

@@ -8,7 +8,7 @@ class AddressDetails {
   final String city;
   final String district;
   final String province;
-  final int postalCode;
+  final String postalCode;
 
   const AddressDetails(
       this.address, this.city, this.district, this.province, this.postalCode);

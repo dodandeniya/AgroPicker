@@ -1,0 +1,3 @@
+class ProfileController {
+  Function completeProfile;
+}
