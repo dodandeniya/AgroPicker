@@ -9,9 +9,9 @@ class AgroProfile {
   final String regNumber;
   final List<String> album;
   final List<String> attachments;
-  final String businessRegistrationDoc;
+  String businessRegistrationDoc;
 
-  const AgroProfile(
+  AgroProfile(
       {this.profileType,
       this.regNumber,
       this.album,

@@ -14,3 +14,7 @@ class ProfileCreationLoading extends ProfileState {}
 class ProfileCreationLoaded extends ProfileState {}
 
 class ProfileCreationError extends ProfileState {}
+
+class ProfileUpdating extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {}

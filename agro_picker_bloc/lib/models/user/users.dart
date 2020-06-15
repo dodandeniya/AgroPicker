@@ -21,7 +21,7 @@ class Users {
   @JsonKey(name: 'location', fromJson: _geoDataFromJson, toJson: _geoDataToJson)
   final GeoPoint location;
   final String mobileNumber;
-  final String profileImage;
+  String profileImage;
   final AgroProfile agroProfile;
   final BankDetails bankDetails;
   @JsonKey(name: 'dateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)

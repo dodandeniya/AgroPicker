@@ -10,6 +10,7 @@ class ProfileBasicInfo extends StatefulWidget {
   final TextEditingController lastNameController;
   final TextEditingController nicController;
   final Function genderDropdownChange;
+  final Function getSelectedProfilePic;
   final String genderDropDownValue;
 
   ProfileBasicInfo(
@@ -18,7 +19,8 @@ class ProfileBasicInfo extends StatefulWidget {
       this.lastNameController,
       this.genderDropDownValue,
       this.genderDropdownChange,
-      this.nicController});
+      this.nicController,
+      this.getSelectedProfilePic});
 
   @override
   State<StatefulWidget> createState() {
@@ -204,6 +206,7 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
 
     setState(() {
       _image = File(pickedFile.path);
+      widget.getSelectedProfilePic(_image);
     });
   }
 }

@@ -34,5 +34,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         yield ProfileCreationError();
       }
     }
+    if (event is UpdateProfile) {
+      yield ProfileUpdating();
+      try {
+        var currentUser = await userRepository.getCurrentUser();
+        await firebaseInterface.updateData<Users>(
+            event.users.toJson(), currentUser.uid);
+        yield ProfileUpdated();
+      } catch (e) {
+        print(e);
+        yield ProfileCreationError();
+      }
+    }
   }
 }
