@@ -17,12 +17,30 @@ class Products {
   @JsonKey(
       name: 'harvestDate', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp harvestDate;
-  final int totalQuentity;
-  final int availableQuentity;
-  final int purchasedQuantity;
-  final int maxPurchaseLimit;
-  final int maxRetailPrice;
-  final int sellingPrice;
+  @JsonKey(
+      name: 'totalQuentity', fromJson: _doubleFromJson, toJson: _doubleToJson)
+  final Double totalQuentity;
+  @JsonKey(
+      name: 'availableQuentity',
+      fromJson: _doubleFromJson,
+      toJson: _doubleToJson)
+  final Double availableQuentity;
+  @JsonKey(
+      name: 'purchasedQuantity',
+      fromJson: _doubleFromJson,
+      toJson: _doubleToJson)
+  final Double purchasedQuantity;
+  @JsonKey(
+      name: 'maxPurchaseLimit',
+      fromJson: _doubleFromJson,
+      toJson: _doubleToJson)
+  final Double maxPurchaseLimit;
+  @JsonKey(
+      name: 'maxRetailPrice', fromJson: _doubleFromJson, toJson: _doubleToJson)
+  final Double maxRetailPrice;
+  @JsonKey(
+      name: 'sellingPrice', fromJson: _doubleFromJson, toJson: _doubleToJson)
+  final Double sellingPrice;
 
   const Products(
       this.id,
@@ -48,6 +66,17 @@ class Products {
   }
 
   static Timestamp _dtDataToJson(Timestamp instance) =>
+      instance == null ? null : instance;
+
+  static Double _doubleFromJson(Double jsonObj) {
+    if (jsonObj != null) {
+      return jsonObj;
+    }
+
+    return null;
+  }
+
+  static Double _doubleToJson(Double instance) =>
       instance == null ? null : instance;
 
   factory Products.fromJson(Map<String, dynamic> json) =>
