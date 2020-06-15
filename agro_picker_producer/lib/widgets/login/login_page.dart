@@ -95,7 +95,7 @@ class _LoginPage extends State<LoginPage> {
                       content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Profile is pending'),
+                          Text('Profile is pending for Admin review.'),
                           Icon(Icons.warning)
                         ],
                       ),
@@ -120,7 +120,7 @@ class _LoginPage extends State<LoginPage> {
                       content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Profile is rejected'),
+                          Text('Profile is rejected by Admin.'),
                           Icon(Icons.error)
                         ],
                       ),

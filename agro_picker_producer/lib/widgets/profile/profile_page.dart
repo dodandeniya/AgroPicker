@@ -38,21 +38,26 @@ class _ProfilePage extends State<ProfilePage> {
   final TextEditingController districtController = TextEditingController();
   final TextEditingController postalCodeController = TextEditingController();
   final ProfileController profileController;
-  final File selectedFile = File('');
+  File profilePic;
+  File businessRegPic;
   String genderDropDownValue;
   Gender selectedGender;
   ProfileBloc profileBloc;
   String profileTypeDropDownValue;
   ProfileType selectedProfileType;
+  FileuploadBloc fileuploadBloc;
 
   _ProfilePage({this.profileController}) {
     profileController.completeProfile = completeProfile;
+    profileController.uploadFile = uploadFiles;
+    profileController.updateProfile = updateProfile;
   }
 
   @override
   void initState() {
     super.initState();
     profileBloc = BlocProvider.of<ProfileBloc>(context);
+    fileuploadBloc = BlocProvider.of<FileuploadBloc>(context);
   }
 
   @override
@@ -87,6 +92,7 @@ class _ProfilePage extends State<ProfilePage> {
           nicController: nicController,
           genderDropdownChange: genderDropDownChange,
           genderDropDownValue: genderDropDownValue,
+          getSelectedProfilePic: getProfilePicFile,
         ),
         state: _getState(0),
       ),
@@ -107,7 +113,7 @@ class _ProfilePage extends State<ProfilePage> {
         title: Container(),
         content: ProfileBusinessInfo(
           businessRegistrationController: businessController,
-          getSelectedFile: getSelectedFile,
+          getBusinessPic: getBusinessRegPicFile,
           profileTypeDropdownChange: profileTypeDropDownChange,
           profileTypeDropdownValue: profileTypeDropDownValue,
           businessInfoKey: widget.businessInfoKey,
@@ -143,16 +149,32 @@ class _ProfilePage extends State<ProfilePage> {
     });
   }
 
-  void getSelectedFile(File selectedFile) {
+  void getProfilePicFile(File selectedFile) {
     if (selectedFile != null) {
-      print('${selectedFile.path} from Function');
+      setState(() {
+        profilePic = selectedFile;
+      });
+      profileController.isFileSelected = true;
     } else {
       print('No File has been selected');
+      profileController.isFileSelected = false;
+    }
+  }
+
+  void getBusinessRegPicFile(File selectedFile) {
+    if (selectedFile != null) {
+      setState(() {
+        businessRegPic = selectedFile;
+      });
+      profileController.isFileSelected = true;
+    } else {
+      print('No File has been selected');
+      profileController.isFileSelected = false;
     }
   }
 
   void completeProfile() {
-    Users user = Users(
+    profileController.userProfile = Users(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
         gender: selectedGender,
@@ -170,6 +192,23 @@ class _ProfilePage extends State<ProfilePage> {
             regNumber: businessController.text.trim(),
             profileType: selectedProfileType),
         role: 1);
-    profileBloc.add(InsertProfile(user: user));
+    profileBloc.add(InsertProfile(user: profileController.userProfile));
+  }
+
+  void uploadFiles() {
+    if (profilePic != null) {
+      fileuploadBloc.add(StartFileUploading(
+          profilePic, FileUploadType.ProfilePicture,
+          directory: 'users'));
+    }
+    if (businessRegPic != null) {
+      fileuploadBloc.add(StartFileUploading(
+          businessRegPic, FileUploadType.BusinessDocument,
+          directory: 'users'));
+    }
+  }
+
+  void updateProfile(Users users) {
+    profileBloc.add(UpdateProfile(users: users));
   }
 }

@@ -137,7 +137,7 @@ class FirebaseInterface {
     return await firestore
         .collection(className)
         .document(docId)
-        .setData(updateValue);
+        .updateData(updateValue);
   }
 
   Future<void> deleteData<T>(String docId) async {

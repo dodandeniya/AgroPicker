@@ -24,3 +24,12 @@ class GetProfile extends ProfileEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class UpdateProfile extends ProfileEvent {
+  final Users users;
+
+  const UpdateProfile({this.users});
+
+  @override
+  List<Object> get props => [users];
+}
