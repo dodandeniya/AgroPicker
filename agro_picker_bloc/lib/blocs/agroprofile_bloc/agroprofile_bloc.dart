@@ -31,22 +31,26 @@ class AgroprofileBloc extends Bloc<AgroprofileEvent, AgroprofileState> {
   }
 
   Stream<AgroprofileState> _mapCheckProfileStateEventToState() async* {
-    var docId = (await firebaseAppSingleton.firebaseAuth.currentUser()).uid;
+    try {
+      var docId = (await firebaseAppSingleton.firebaseAuth.currentUser()).uid;
 
-    var state = (await db
-        .getDocumentById<Users>(docId)
-        .then((value) => Users.fromJson(value.data).profileState));
+      var state = (await db
+          .getDocumentById<Users>(docId)
+          .then((value) => Users.fromJson(value.data).profileState));
 
-    switch (state) {
-      case AgroProfileState.Approved:
-        yield Approved();
-        break;
-      case AgroProfileState.Rejected:
-        yield Rejected();
-        break;
-      default:
-        yield Pending();
-        break;
+      switch (state) {
+        case AgroProfileState.Approved:
+          yield Approved();
+          break;
+        case AgroProfileState.Rejected:
+          yield Rejected();
+          break;
+        default:
+          yield Pending();
+          break;
+      }
+    } catch (e) {
+      yield Pending();
     }
   }
 }
