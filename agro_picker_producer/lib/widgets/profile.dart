@@ -37,13 +37,11 @@ class _Profile extends State<Profile> {
               if (profileController.isFileSelected) {
                 profileController.uploadFile();
               } else {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Main()));
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
               }
             }
             if (state is ProfileUpdated) {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Main()));
+              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
             }
           },
         ),
