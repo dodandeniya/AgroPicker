@@ -29,7 +29,7 @@ class Main extends StatelessWidget {
             return SplashScreen();
           }
           if (state is Authenticated) {
-            return HomeScreen(name: state.displayName);
+            return Home(name: state.displayName);
           }
           if (state is PendingProfileCompletion) {
             return BlocProvider<ProfileBloc>(

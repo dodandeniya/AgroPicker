@@ -2,10 +2,10 @@ import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class Home extends StatelessWidget {
   final String name;
 
-  HomeScreen({Key key, @required this.name}) : super(key: key);
+  Home({Key key, @required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,9 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           Center(child: Text('Welcome $name!')),
         ],
+      ),
+      drawer: Drawer(
+        child: Container(),
       ),
     );
   }
