@@ -12,9 +12,9 @@ const List<MesureTypeModel> mesureTypList = [
   MesureTypeModel(4, "l")
 ];
 
-const List<TypeModel> growthTypesList = [
-  TypeModel(1, "Organic"),
-  TypeModel(2, "Non Organic")
+const List<GrowthTypeModel> growthTypesList = [
+  GrowthTypeModel(1, "Organic"),
+  GrowthTypeModel(2, "Non Organic")
 ];
 
 const List<StoreStatus> storeStatusList = [
