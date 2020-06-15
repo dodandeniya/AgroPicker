@@ -1,3 +1,4 @@
+import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class SplashScreen extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CircularProgressIndicator(),
+          CircularProgress(),
           SizedBox(
             height: 50,
           ),
