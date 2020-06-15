@@ -1,5 +1,6 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
+import 'package:agro_picker_producer/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,12 +38,12 @@ class _Profile extends State<Profile> {
                 profileController.uploadFile();
               } else {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                    context, MaterialPageRoute(builder: (context) => Main()));
               }
             }
             if (state is ProfileUpdated) {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+                  context, MaterialPageRoute(builder: (context) => Main()));
             }
           },
         ),
