@@ -18,63 +18,127 @@ class _LoginPage extends State<LoginPage> {
   bool isLoading = true;
 
   LoginBloc _loginBloc;
+  AgroprofileBloc _agroprofileBloc;
 
   @override
   void initState() {
     super.initState();
     _loginBloc = BlocProvider.of<LoginBloc>(context);
+    _agroprofileBloc = BlocProvider.of<AgroprofileBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) {
-          if (state.isFailure) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text('Login Failure'), Icon(Icons.error)],
-                  ),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            setState(() {
-              isLoading = true;
-            });
-          }
-          if (state.isSubmitting) {
-            setState(() {
-              isLoading = false;
-            });
-          }
-          if (!state.isEmailVerified && state.isSuccess) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Email Address has not been verified yet.'),
-                      Icon(Icons.error)
-                    ],
-                  ),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            setState(() {
-              isLoading = true;
-            });
-          }
-          if (state.isSuccess && state.isEmailVerified) {
-            BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-          }
-        },
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state.isFailure) {
+                Scaffold.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Text('Login Failure'), Icon(Icons.error)],
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                setState(() {
+                  isLoading = true;
+                });
+              }
+              if (state.isSubmitting) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
+              if (!state.isEmailVerified && state.isSuccess) {
+                Scaffold.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Email Address has not been verified yet.'),
+                          Icon(Icons.error)
+                        ],
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                setState(() {
+                  isLoading = true;
+                });
+              }
+              if (state.isSuccess && state.isEmailVerified) {
+                _agroprofileBloc.add(CheckProfileState());
+              }
+            },
+          ),
+          BlocListener<AgroprofileBloc, AgroprofileState>(
+            listener: (context, state) {
+              if (state is Pending) {
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                  LoggedOut(),
+                );
+                _agroprofileBloc.add(ResetPrefileState());
+                Scaffold.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Profile is pending'),
+                          Icon(Icons.warning)
+                        ],
+                      ),
+                      backgroundColor: Colors.orange[300],
+                    ),
+                  );
+                setState(() {
+                  isLoading = true;
+                });
+              }
+
+              if (state is Rejected) {
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                  LoggedOut(),
+                );
+                _agroprofileBloc.add(ResetPrefileState());
+                Scaffold.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Profile is rejected'),
+                          Icon(Icons.error)
+                        ],
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                setState(() {
+                  isLoading = true;
+                });
+              }
+
+              if (state is Approved) {
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+                _agroprofileBloc.add(ResetPrefileState());
+              }
+            },
+          ),
+        ],
         child: Container(
           child: SingleChildScrollView(
             child: Column(

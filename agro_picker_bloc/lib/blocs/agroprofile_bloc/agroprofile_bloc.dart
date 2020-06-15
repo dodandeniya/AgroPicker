@@ -21,20 +21,21 @@ class AgroprofileBloc extends Bloc<AgroprofileEvent, AgroprofileState> {
       yield* _mapCheckProfileStateEventToState();
     }
 
-    if (event is ProfileStateChangedEvent) {
-      yield* _mapProfileStateChangedEventToState(event);
+    if (event is ResetPrefileState) {
+      yield* _mapResetPrefileStateEventToState();
     }
+  }
+
+  Stream<AgroprofileState> _mapResetPrefileStateEventToState() async* {
+    yield AgroprofileInitial();
   }
 
   Stream<AgroprofileState> _mapCheckProfileStateEventToState() async* {
     var docId = (await firebaseAppSingleton.firebaseAuth.currentUser()).uid;
-    db.getObject<Users>(docId).listen((onData) => add(
-        ProfileStateChangedEvent(Users.fromJson(onData.data).profileState)));
-  }
 
-  Stream<AgroprofileState> _mapProfileStateChangedEventToState(
-      ProfileStateChangedEvent event) async* {
-    AgroProfileState state = event.profileState;
+    var state = (await db
+        .getDocumentById<Users>(docId)
+        .then((value) => Users.fromJson(value.data).profileState));
 
     switch (state) {
       case AgroProfileState.Approved:

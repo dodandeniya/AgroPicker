@@ -9,13 +9,21 @@ class Login extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: BlocProvider<LoginBloc>(
-              create: (c) => LoginBloc(),
-              child: LoginPage(),
-            )),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<LoginBloc>(
+                create: (c) => LoginBloc(),
+              ),
+              BlocProvider<AgroprofileBloc>(
+                create: (c) => AgroprofileBloc(),
+              ),
+            ],
+            child: LoginPage(),
+          ),
+        ),
       ),
     );
   }

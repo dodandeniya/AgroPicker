@@ -10,10 +10,4 @@ abstract class AgroprofileEvent extends Equatable {
 
 class CheckProfileState extends AgroprofileEvent {}
 
-class ProfileStateChangedEvent extends AgroprofileEvent {
-  final AgroProfileState profileState;
-  const ProfileStateChangedEvent(this.profileState);
-
-  @override
-  List<Object> get props => [profileState];
-}
+class ResetPrefileState extends AgroprofileEvent {}

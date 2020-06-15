@@ -17,6 +17,11 @@ class FirebaseInterface {
     return firestore.collection(className).document(docId).snapshots();
   }
 
+  Future<DocumentSnapshot> getDocumentById<T>(String docId) async {
+    var className = T.toString();
+    return await firestore.collection(className).document(docId).get();
+  }
+
   Stream<QuerySnapshot> getQueryObject<T>(
       List<FirebaseQueryParameter> parameters) {
     var className = T.toString();
