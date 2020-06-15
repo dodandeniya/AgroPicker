@@ -27,23 +27,32 @@ class FileuploadBloc extends Bloc<FileuploadEvent, FileuploadState> {
     StorageReference storageReference;
     final String userId =
         (await firebaseAppSingleton.firebaseAuth.currentUser()).uid;
-    final File pickedFile =
-        File((await ImagePicker().getImage(source: ImageSource.gallery)).path);
 
-    storageReference = (event.directory != null || event.directory == '')
-        ? storageReference = firebaseAppSingleton.fireStorage.ref().child(
-            '${event.directory}/$userId/${Path.basename(pickedFile.path)}}')
-        : firebaseAppSingleton.fireStorage
-            .ref()
-            .child('$userId/${Path.basename(pickedFile.path)}}');
+    if (event.file != null) {
+      final File pickedFile = event.file;
 
-    try {
-      StorageUploadTask uploadTask = storageReference.putFile(pickedFile);
-      await uploadTask.onComplete;
-      print('File Uploaded');
-      String url = (await storageReference.getDownloadURL());
-      yield FileuploadCompleted(url);
-    } catch (e) {
+      String newPath = Path.join(Path.dirname(pickedFile.path),
+          DateTime.now().millisecondsSinceEpoch.toString());
+
+      pickedFile.renameSync(newPath);
+
+      storageReference = (event.directory != null || event.directory == '')
+          ? storageReference = firebaseAppSingleton.fireStorage.ref().child(
+              '${event.directory}/$userId/${Path.basename(pickedFile.path)}}')
+          : firebaseAppSingleton.fireStorage
+              .ref()
+              .child('$userId/${Path.basename(pickedFile.path)}}');
+
+      try {
+        StorageUploadTask uploadTask = storageReference.putFile(pickedFile);
+        await uploadTask.onComplete;
+        print('File Uploaded');
+        String url = (await storageReference.getDownloadURL());
+        yield FileuploadCompleted(url);
+      } catch (e) {
+        yield FileuploadFaild();
+      }
+    } else {
       yield FileuploadFaild();
     }
   }

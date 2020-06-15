@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 abstract class FileuploadEvent extends Equatable {
@@ -8,8 +10,9 @@ abstract class FileuploadEvent extends Equatable {
 
 class StartFileUploading extends FileuploadEvent {
   final String directory;
+  final File file;
 
-  const StartFileUploading({this.directory});
+  const StartFileUploading(this.file, {this.directory});
 
   @override
   List<Object> get props => [directory];
