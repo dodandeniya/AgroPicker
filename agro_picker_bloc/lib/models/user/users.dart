@@ -28,6 +28,7 @@ class Users {
   final Timestamp dateTime;
   final bool isProfileCompleted;
   final bool isOnline;
+  AgroProfileState profileState;
 
   Users(
       {this.userId,
@@ -48,7 +49,9 @@ class Users {
       this.nic,
       this.dateTime,
       this.isOnline,
-      this.isProfileCompleted});
+      this.isProfileCompleted}) {
+    this.profileState = AgroProfileState.Pending;
+  }
 
   static GeoPoint _geoDataFromJson(GeoPoint jsonObj) {
     if (jsonObj != null) {
