@@ -17,30 +17,13 @@ class Products {
   @JsonKey(
       name: 'harvestDate', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp harvestDate;
-  @JsonKey(
-      name: 'totalQuentity', fromJson: _doubleFromJson, toJson: _doubleToJson)
-  final Double totalQuentity;
-  @JsonKey(
-      name: 'availableQuentity',
-      fromJson: _doubleFromJson,
-      toJson: _doubleToJson)
-  final Double availableQuentity;
-  @JsonKey(
-      name: 'purchasedQuantity',
-      fromJson: _doubleFromJson,
-      toJson: _doubleToJson)
-  final Double purchasedQuantity;
-  @JsonKey(
-      name: 'maxPurchaseLimit',
-      fromJson: _doubleFromJson,
-      toJson: _doubleToJson)
-  final Double maxPurchaseLimit;
-  @JsonKey(
-      name: 'maxRetailPrice', fromJson: _doubleFromJson, toJson: _doubleToJson)
-  final Double maxRetailPrice;
-  @JsonKey(
-      name: 'sellingPrice', fromJson: _doubleFromJson, toJson: _doubleToJson)
-  final Double sellingPrice;
+
+  final dynamic totalQuantity;
+  final dynamic availableQuantity;
+  final dynamic purchasedQuantity;
+  final dynamic maxPurchaseLimit;
+  final dynamic maxRetailPrice;
+  final dynamic sellingPrice;
 
   const Products(
       this.id,
@@ -50,8 +33,8 @@ class Products {
       this.growthType,
       this.mesureType,
       this.harvestDate,
-      this.totalQuentity,
-      this.availableQuentity,
+      this.totalQuantity,
+      this.availableQuantity,
       this.purchasedQuantity,
       this.maxPurchaseLimit,
       this.maxRetailPrice,
@@ -66,17 +49,6 @@ class Products {
   }
 
   static Timestamp _dtDataToJson(Timestamp instance) =>
-      instance == null ? null : instance;
-
-  static Double _doubleFromJson(Double jsonObj) {
-    if (jsonObj != null) {
-      return jsonObj;
-    }
-
-    return null;
-  }
-
-  static Double _doubleToJson(Double instance) =>
       instance == null ? null : instance;
 
   factory Products.fromJson(Map<String, dynamic> json) =>
