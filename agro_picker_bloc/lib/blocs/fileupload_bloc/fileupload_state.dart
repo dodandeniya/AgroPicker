@@ -1,3 +1,4 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FileuploadState extends Equatable {
@@ -12,11 +13,12 @@ class FileuploadInitial extends FileuploadState {}
 class Fileuploading extends FileuploadState {}
 
 class FileuploadCompleted extends FileuploadState {
-  final String dounloadableUrl;
-  const FileuploadCompleted(this.dounloadableUrl);
+  final String downloadableUrl;
+  final FileUploadType fileUploadType;
+  const FileuploadCompleted(this.downloadableUrl, this.fileUploadType);
 
   @override
-  List<Object> get props => [dounloadableUrl];
+  List<Object> get props => [downloadableUrl, fileUploadType];
 }
 
-class FileuploadFaild extends FileuploadState {}
+class FileuploadFailed extends FileuploadState {}

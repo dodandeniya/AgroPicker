@@ -8,14 +8,14 @@ import 'package:flutter/services.dart';
 
 class ProfileBusinessInfo extends StatefulWidget {
   final TextEditingController businessRegistrationController;
-  final Function getSelectedFile;
+  final Function getBusinessPic;
   final Function profileTypeDropdownChange;
   final String profileTypeDropdownValue;
   final GlobalKey<FormState> businessInfoKey;
 
   ProfileBusinessInfo({
     this.businessRegistrationController,
-    this.getSelectedFile,
+    this.getBusinessPic,
     this.profileTypeDropdownChange,
     this.profileTypeDropdownValue,
     this.businessInfoKey,
@@ -108,13 +108,13 @@ class _ProfileBusinessInfo extends State<ProfileBusinessInfo> {
                 textTheme: ButtonTextTheme.primary,
                 onPressed: () async {
                   selectedFile = await filePickController.openFileExplorer();
-                  widget.getSelectedFile(selectedFile);
+                  widget.getBusinessPic(selectedFile);
                   Stream<File> fileStream = filePickController.clearFile();
                   streamSubscription = fileStream.listen((onData) {
                     setState(() {
                       selectedFile = onData;
                     });
-                    widget.getSelectedFile(selectedFile);
+                    widget.getBusinessPic(selectedFile);
                     streamSubscription.cancel();
                   });
                 },
