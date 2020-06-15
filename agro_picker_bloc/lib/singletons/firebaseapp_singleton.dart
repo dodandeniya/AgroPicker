@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseAppSingleton {
   static final FirebaseAppSingleton _firebaseAppSingleton =
@@ -12,6 +13,7 @@ class FirebaseAppSingleton {
 
   Firestore firestore;
   FirebaseAuth firebaseAuth;
+  FirebaseStorage fireStorage;
 
   Future<void> createFirebaseConnection() async {
     final FirebaseApp app = await FirebaseApp.configure(
@@ -25,5 +27,7 @@ class FirebaseAppSingleton {
 
     firestore = Firestore(app: app);
     firebaseAuth = FirebaseAuth.fromApp(app);
+    fireStorage = FirebaseStorage(
+        app: app, storageBucket: "gs://agropicker.appspot.com/");
   }
 }

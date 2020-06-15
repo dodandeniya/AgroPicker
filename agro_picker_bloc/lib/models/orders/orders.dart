@@ -1,12 +1,13 @@
 import 'package:agro_picker_bloc/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'orders.g.dart';
 
 @JsonSerializable(anyMap: true, explicitToJson: true)
 class Orders {
-  final String orderId;
+  String orderId;
   final String venderId;
   final String consumerId;
   final OrderStatus status;
@@ -14,8 +15,9 @@ class Orders {
       name: 'orderDateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp orderDateTime;
 
-  const Orders(this.orderId, this.venderId, this.consumerId, this.status,
-      this.orderDateTime);
+  Orders(this.venderId, this.consumerId, this.status, this.orderDateTime) {
+    this.orderId = Uuid().v1();
+  }
 
   static Timestamp _dtDataFromJson(Timestamp jsonObj) {
     if (jsonObj != null) {
