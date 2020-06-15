@@ -26,7 +26,7 @@ class _Profile extends State<Profile> {
           return SplashScreen();
         }
         if (state is ProfileCreationLoaded) {
-          return Home(name: 'to Dashboard');
+          return Home();
         }
 
         return WillPopScope(

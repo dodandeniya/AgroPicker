@@ -1,37 +1,45 @@
-import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Home extends StatelessWidget {
-  final String name;
+class Home extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _Home();
+  }
+}
 
-  Home({Key key, @required this.name}) : super(key: key);
+class _Home extends State<Home> with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  final List<String> _tabs = <String>["SUMMARY", "MY ORDERS", "MY STOCKS"];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: _tabs.length, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              BlocProvider.of<AuthenticationBloc>(context).add(
-                LoggedOut(),
-              );
-            },
-          )
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Center(child: Text('Welcome $name!')),
-        ],
-      ),
-      drawer: Drawer(
-        child: Container(),
-      ),
+    return SafeArea(
+      child: Scaffold(
+          drawer: Drawer(
+            child: HomeDrawer(),
+          ),
+          appBar: AppBar(
+            title: Text('Agro Picker'),
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: _tabs
+                  .map((e) => Tab(
+                        child: Text(e),
+                      ))
+                  .toList(),
+            ),
+          ),
+          body: HomeScreen(
+            tabController: _tabController,
+          )),
     );
   }
 }

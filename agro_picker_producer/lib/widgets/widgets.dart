@@ -5,6 +5,7 @@ export 'register/registration_page.dart';
 export 'splashscreen.dart';
 export 'home.dart';
 export 'home/homescreen.dart';
+export 'home/homedrawer.dart';
 export 'register/registration_email.dart';
 export 'register/registration_success.dart';
 export 'profile.dart';
