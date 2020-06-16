@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:agro_picker_producer/agro_picker_producer.dart';
 
 class HomeScreen extends StatefulWidget {
   final TabController tabController;
@@ -15,57 +16,9 @@ class _HomeScreen extends State<HomeScreen> {
     return TabBarView(
       controller: widget.tabController,
       children: [
-        ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            ),
-            ListTile(
-              title: Text('Data1'),
-            )
-          ],
-        ),
-        ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('Data1'),
-            )
-          ],
-        ),
-        ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('Data1'),
-            )
-          ],
-        ),
+        HomeSummary(),
+        OrderList(),
+        StocksAvailable(),
       ],
     );
   }

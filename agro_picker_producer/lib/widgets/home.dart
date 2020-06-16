@@ -37,8 +37,13 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                   .toList(),
             ),
           ),
-          body: HomeScreen(
-            tabController: _tabController,
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: HomeScreen(
+              tabController: _tabController,
+            ),
           )),
     );
   }
