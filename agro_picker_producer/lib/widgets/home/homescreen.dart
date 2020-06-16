@@ -1,5 +1,7 @@
+import 'package:agro_picker_bloc/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   final TabController tabController;
@@ -13,13 +15,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      controller: widget.tabController,
-      children: [
-        HomeSummary(),
-        OrderList(),
-        StocksAvailable(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DashboardsummaryBloc>(
+            create: (c) => DashboardsummaryBloc()),
       ],
+      child: TabBarView(
+        controller: widget.tabController,
+        children: [
+          HomeSummary(),
+          OrderList(),
+          StocksAvailable(),
+        ],
+      ),
     );
   }
 }
