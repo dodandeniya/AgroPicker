@@ -1,3 +1,4 @@
+import 'package:agro_picker_bloc/enums/enum.dart';
 import 'package:agro_picker_bloc/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
@@ -10,8 +11,8 @@ class ProductStores {
   final String venderId;
   final bool isVenderOnline;
   final Products product;
-  final String price;
-  final StoreStatus status;
+  final dynamic price;
+  final StockAvailabilty status;
 
   ProductStores(this.venderId, this.isVenderOnline, this.product, this.price,
       this.status) {

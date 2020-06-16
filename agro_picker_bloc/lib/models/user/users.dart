@@ -27,8 +27,9 @@ class Users {
   @JsonKey(name: 'dateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp dateTime;
   final bool isProfileCompleted;
-  final bool isOnline;
+  bool isOnline;
   AgroProfileState profileState;
+  dynamic totalIncome;
 
   Users(
       {this.userId,
@@ -49,7 +50,8 @@ class Users {
       this.nic,
       this.dateTime,
       this.isOnline,
-      this.isProfileCompleted}) {
+      this.isProfileCompleted,
+      this.totalIncome}) {
     this.profileState = AgroProfileState.Pending;
   }
 

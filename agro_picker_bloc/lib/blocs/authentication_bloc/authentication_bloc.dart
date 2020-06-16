@@ -7,6 +7,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository = UserRepository();
   final FirebaseInterface db = FirebaseInterface();
+  final UserStatusSingleton user = UserStatusSingleton.getInstance();
 
   @override
   AuthenticationState get initialState => Uninitialized();
@@ -50,6 +51,7 @@ class AuthenticationBloc
       if (document.isProfileCompleted != null &&
           document.isProfileCompleted == true) {
         yield Authenticated(await _userRepository.getUser());
+        user.setUserStatus(document);
       } else {
         yield PendingProfileCompletion();
       }
