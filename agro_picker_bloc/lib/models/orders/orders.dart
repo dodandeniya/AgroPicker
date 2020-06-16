@@ -1,3 +1,4 @@
+import 'package:agro_picker_bloc/enums/enum.dart';
 import 'package:agro_picker_bloc/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -11,7 +12,7 @@ class Orders {
   final String venderId;
   final String consumerId;
   final Products orderItem;
-  final OrderStatus status;
+  final OrderStatuses status;
   @JsonKey(
       name: 'orderDateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp orderDateTime;
