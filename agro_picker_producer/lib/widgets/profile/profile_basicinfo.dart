@@ -55,13 +55,11 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.black,
                           radius: 50,
-                          backgroundImage: _image != null
-                              ? FileImage(_image, scale: 2)
-                              : ResizeImage(
-                                  AssetImage(
-                                      'assets/images/round_account_circle_black_48dp.png'),
-                                  width: 100,
-                                  height: 100),
+                          child: _image == null
+                              ? Icon(Icons.person)
+                              : ClipOval(
+                                  child: Image.file(_image),
+                                ),
                         ),
                       ),
                       Positioned(

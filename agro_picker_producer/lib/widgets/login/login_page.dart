@@ -204,7 +204,7 @@ class _LoginPage extends State<LoginPage> {
                                   child: CircularProgressIndicator(
                                     backgroundColor: Colors.white,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.lightBlue),
+                                        Theme.of(context).accentColor),
                                   ),
                                   width: 25,
                                   height: 25,
@@ -226,14 +226,16 @@ class _LoginPage extends State<LoginPage> {
                             EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: RaisedButton(
                           color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Registration(),
-                              ),
-                            );
-                          },
+                          onPressed: isLoading
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Registration(),
+                                    ),
+                                  );
+                                }
+                              : null,
                           child: Text(
                             'REGISTER',
                             style: TextStyle(color: Colors.white),

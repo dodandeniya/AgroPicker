@@ -23,8 +23,11 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          drawer: Drawer(
-            child: HomeDrawer(),
+          drawer: Container(
+            width: 250,
+            child: Drawer(
+              child: HomeDrawer(),
+            ),
           ),
           appBar: AppBar(
             title: Text('Agro Picker'),
