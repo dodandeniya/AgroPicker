@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 class OrderTemplate extends StatefulWidget {
   final String orderId;
   final String time;
+  final bool isSelected;
+  final Function selectedOrder;
+  final int index;
 
-  OrderTemplate(this.orderId, this.time);
+  OrderTemplate(
+      this.orderId, this.time, this.isSelected, this.selectedOrder, this.index);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,6 +35,7 @@ class _OrderTemplate extends State<OrderTemplate> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        selected: widget.isSelected,
         enabled: true,
         title: Text('Order ID : ${widget.orderId}'),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
@@ -55,6 +60,7 @@ class _OrderTemplate extends State<OrderTemplate> {
           },
         ),
         onTap: () {
+          widget.selectedOrder(widget.index);
           Navigator.push(
             context,
             MaterialPageRoute(

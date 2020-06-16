@@ -1,35 +1,41 @@
 import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
 
-class OrderList extends StatefulWidget {
+class StocksList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _OrderList();
+    return _StocksList();
   }
 }
 
-class _OrderList extends State<OrderList> {
+class _StocksList extends State<StocksList> {
   List<bool> selected = [false, false];
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
-          SearchBar('Search Order', searchOrder),
-          ListTile(
-            title: Text('Pending Orders'),
-            subtitle: Text('Count : 16'),
+          SearchBar('Search for an Item', searchOrder),
+          Container(
+            alignment: Alignment.topCenter,
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StockCreation(),
+                  ),
+                );
+              },
+              child: Text('ADD STOCKS'),
+              textTheme: ButtonTextTheme.primary,
+            ),
           ),
           Expanded(
             child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return OrderTemplate(
-                      '34005698',
-                      'June 15, 2020 at 9:46:14 PM',
-                      selected[index],
-                      selectOrder,
-                      index);
+                  return StocksTemplate('Vegetable>Greens>Exotic', 'Wal-Penera',
+                      selected[index], selectStock, index);
                 },
                 separatorBuilder: (context, index) {
                   return const Divider();
@@ -45,7 +51,7 @@ class _OrderList extends State<OrderList> {
     print(orderName);
   }
 
-  void selectOrder(int index) {
+  void selectStock(int index) {
     setState(() {
       selected = selected.map((e) => e = false).toList();
       selected[index] = true;

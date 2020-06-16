@@ -25,7 +25,7 @@ class _HomeScreen extends State<HomeScreen> {
         children: [
           HomeSummary(),
           OrderList(),
-          StocksAvailable(),
+          StocksList(),
         ],
       ),
     );
