@@ -31,6 +31,13 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
         listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if (state is ProfileCompleted) {
+                _agroprofileBloc.add(CheckProfileState());
+              }
+            },
+          ),
           BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state.isFailure) {
@@ -76,7 +83,8 @@ class _LoginPage extends State<LoginPage> {
                 });
               }
               if (state.isSuccess && state.isEmailVerified) {
-                _agroprofileBloc.add(CheckProfileState());
+                BlocProvider.of<AuthenticationBloc>(context)
+                    .add(CheckProfileCompleted());
               }
             },
           ),
