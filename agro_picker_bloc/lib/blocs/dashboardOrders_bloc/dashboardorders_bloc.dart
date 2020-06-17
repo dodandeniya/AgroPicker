@@ -31,6 +31,14 @@ class DashboardordersBloc
     if (event is StartOrderSearchEvent) {
       yield* _mapStartOrderSearchEventToState(event);
     }
+
+    if (event is UpdateOrder) {
+      yield* _mapUpdateOrderEventToState(event);
+    }
+
+    if (event is DeleteOrder) {
+      yield* _mapDeleteOrderEventToState(event);
+    }
   }
 
   Stream<DashboardordersState> _mapCreateOrderEventToState(
@@ -78,5 +86,28 @@ class DashboardordersBloc
     orderRepository.getOrdersBySearch(event.searchKey).listen((event) {
       add(OrderBoardUpdateListner(event.documents));
     });
+  }
+
+  Stream<DashboardordersState> _mapUpdateOrderEventToState(
+      UpdateOrder event) async* {
+    var result =
+        await orderRepository.updateOrder(event.updateItem, event.orderId);
+
+    if (result) {
+      yield OrderSucessfullyUpdated();
+    } else {
+      yield OrderUpdataionFailed();
+    }
+  }
+
+  Stream<DashboardordersState> _mapDeleteOrderEventToState(
+      DeleteOrder event) async* {
+    var result = await orderRepository.deleteOrder(event.orderId);
+
+    if (result) {
+      yield OrderDeleted();
+    } else {
+      yield OrderDeletionFailed();
+    }
   }
 }

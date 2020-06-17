@@ -41,4 +41,23 @@ class OrderRepository {
       return false;
     }
   }
+
+  Future<bool> updateOrder(
+      Map<dynamic, dynamic> updateItem, String orderId) async {
+    try {
+      await db.updateData<Orders>(updateItem, orderId);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> deleteOrder(String orderId) async {
+    try {
+      await db.deleteData<Orders>(orderId);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

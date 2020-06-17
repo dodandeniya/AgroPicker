@@ -28,3 +28,11 @@ class EmptyOrderList extends DashboardordersState {}
 class OrderCreated extends DashboardordersState {}
 
 class OrderCreationFailed extends DashboardordersState {}
+
+class OrderSucessfullyUpdated extends DashboardordersState {}
+
+class OrderUpdataionFailed extends DashboardordersState {}
+
+class OrderDeleted extends DashboardordersState {}
+
+class OrderDeletionFailed extends DashboardordersState {}
