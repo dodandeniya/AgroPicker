@@ -1,5 +1,3 @@
-import 'package:agro_picker_bloc/enums/enum.dart';
-import 'package:agro_picker_bloc/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AgroprofileEvent extends Equatable {

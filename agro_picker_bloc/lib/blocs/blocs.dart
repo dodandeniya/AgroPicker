@@ -25,5 +25,8 @@ export 'dashboardOrders_bloc/dashboardorders_state.dart';
 export 'dashboardProductStock_bloc/dashboardproductstock_bloc.dart';
 export 'dashboardProductStock_bloc/dashboardproductstock_event.dart';
 export 'dashboardProductStock_bloc/dashboardproductstock_state.dart';
+export 'userStatus_bloc/userstatus_bloc.dart';
+export 'userStatus_bloc/userstatus_event.dart';
+export 'userStatus_bloc/userstatus_state.dart';
 export 'profile_bloc/profile_bloc.dart';
 export 'agro_bloc_delegate.dart';
