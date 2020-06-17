@@ -23,4 +23,6 @@ class Authenticated extends AuthenticationState {
 
 class PendingProfileCompletion extends AuthenticationState {}
 
+class ProfileCompleted extends AuthenticationState {}
+
 class Unauthenticated extends AuthenticationState {}
