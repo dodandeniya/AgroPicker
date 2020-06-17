@@ -60,4 +60,11 @@ class ProductStockRepository {
       return false;
     }
   }
+
+  Future<void> updateProducerStatus(bool isOnline) async {
+    FirebaseQueryParameter firebaseQueryParameter =
+        FirebaseQueryParameter(fieldName: 'venderId', fieldValue: user.userId);
+    Map<String, dynamic> updateValue = {'isVenderOnline': isOnline};
+    await db.runTransaction<ProductStores>(firebaseQueryParameter, updateValue);
+  }
 }

@@ -156,6 +156,24 @@ class FirebaseInterface {
     documentList.addAll(newDocumentList);
     return documentList;
   }
+
+  Future<void> runTransaction<T>(FirebaseQueryParameter firebaseQueryParameter,
+      Map<String, dynamic> updateValue) async {
+    firestore.runTransaction((transaction) async {
+      var className = T.toString();
+      final allDocs = await firestore
+          .collection(className)
+          .where(firebaseQueryParameter.fieldName,
+              isEqualTo: firebaseQueryParameter.fieldValue)
+          .getDocuments();
+
+      final toBeRetrieved = allDocs.documents.toList();
+      await Future.forEach(
+          toBeRetrieved,
+          (DocumentSnapshot snapshot) async =>
+              await transaction.update(snapshot.reference, updateValue));
+    });
+  }
 }
 
 enum QueryMethod {

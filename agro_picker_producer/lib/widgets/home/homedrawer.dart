@@ -10,19 +10,18 @@ class HomeDrawer extends StatefulWidget {
 }
 
 class _HomeDrawer extends State<HomeDrawer> {
-  Image img;
-  bool isOnline = true;
+  bool isOnline;
   final UserStatusSingleton userStatusSingleton =
       UserStatusSingleton.getInstance();
   Users user;
+  UserStatusBloc userStatusBloc;
 
   @override
   void initState() {
     super.initState();
     user = userStatusSingleton.user;
-    img = Image.network(
-      user.profileImage,
-    );
+    isOnline = user.isOnline;
+    userStatusBloc = BlocProvider.of<UserStatusBloc>(context);
   }
 
   @override
@@ -38,7 +37,7 @@ class _HomeDrawer extends State<HomeDrawer> {
                   backgroundColor: Theme.of(context).accentColor,
                   radius: 50,
                   child: ClipOval(
-                    child: img,
+                    child: userStatusSingleton.image,
                   ),
                 ),
                 Container(
@@ -49,15 +48,27 @@ class _HomeDrawer extends State<HomeDrawer> {
               ],
             ),
           ),
-          SwitchListTile(
-            title: Text('Status'),
-            subtitle: isOnline ? Text('Online') : Text('Offline'),
-            value: isOnline,
-            onChanged: (val) {
-              setState(() {
-                isOnline = val;
-              });
+          BlocListener<UserStatusBloc, UserStatusState>(
+            listener: (context, state) {
+              if (state is UserStatusOffline) {
+                setState(() {
+                  isOnline = false;
+                });
+              }
+              if (state is UserStatusOnline) {
+                setState(() {
+                  isOnline = true;
+                });
+              }
             },
+            child: SwitchListTile(
+              title: Text('Status'),
+              subtitle: isOnline ? Text('Online') : Text('Offline'),
+              value: isOnline,
+              onChanged: (val) {
+                userStatusBloc.add(ChangeUserStatus(val));
+              },
+            ),
           ),
           ListTile(
             title: Text('Settings'),

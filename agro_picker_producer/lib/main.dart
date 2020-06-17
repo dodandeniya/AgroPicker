@@ -1,7 +1,6 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/theme/style.dart';
 import 'package:agro_picker_producer/widgets/widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
