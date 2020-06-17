@@ -99,7 +99,7 @@ class _LoginPage extends State<LoginPage> {
                           Icon(Icons.warning)
                         ],
                       ),
-                      backgroundColor: Colors.orange[300],
+                      backgroundColor: Colors.lightBlue,
                     ),
                   );
                 setState(() {
