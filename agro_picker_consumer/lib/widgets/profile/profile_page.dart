@@ -10,14 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProfilePage extends StatefulWidget {
   final int stepIndex;
   final GlobalKey<FormState> basicInfoKey;
-  final GlobalKey<FormState> contactInfoKey;
   final ProfileController profileController;
 
-  ProfilePage(
-      {this.stepIndex,
-      this.basicInfoKey,
-      this.contactInfoKey,
-      this.profileController});
+  ProfilePage({this.stepIndex, this.basicInfoKey, this.profileController});
 
   @override
   State<StatefulWidget> createState() {
@@ -29,9 +24,7 @@ class _ProfilePage extends State<ProfilePage> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
-  final TextEditingController nicController = TextEditingController();
   final TextEditingController provinceController = TextEditingController();
-
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
@@ -61,30 +54,10 @@ class _ProfilePage extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: Stepper(
-        steps: getSteps(context),
-        type: StepperType.horizontal,
-        currentStep: widget.stepIndex,
-        controlsBuilder: (context, {onStepContinue, onStepCancel}) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(),
-              Container(),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  List<Step> getSteps(BuildContext context) {
-    return [
-      Step(
-        title: Container(),
-        content: ProfileBasicInfo(
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: ProfileBasicInfo(
           firstNameController: firstNameController,
           lastNameController: lastNameController,
           formKey: widget.basicInfoKey,
@@ -92,32 +65,14 @@ class _ProfilePage extends State<ProfilePage> {
           genderDropdownChange: genderDropDownChange,
           genderDropDownValue: genderDropDownValue,
           getSelectedProfilePic: getProfilePicFile,
-        ),
-        state: _getState(0),
-      ),
-      Step(
-        title: Container(),
-        content: ProfileContactInfo(
-          formKey: widget.contactInfoKey,
           provinceController: provinceController,
           addressController: addressController,
           cityController: cityController,
           districtController: districtController,
           postalCodeController: postalCodeController,
         ),
-        state: _getState(1),
       ),
-    ];
-  }
-
-  StepState _getState(int index) {
-    if (widget.stepIndex > index) {
-      return StepState.complete;
-    }
-    if (widget.stepIndex == index) {
-      return StepState.editing;
-    }
-    return StepState.indexed;
+    );
   }
 
   void genderDropDownChange(String selectedValue) {

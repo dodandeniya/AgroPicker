@@ -12,15 +12,26 @@ class ProfileBasicInfo extends StatefulWidget {
   final Function getSelectedProfilePic;
   final String genderDropDownValue;
   final TextEditingController mobileController;
+  final TextEditingController provinceController;
+  final TextEditingController cityController;
+  final TextEditingController addressController;
+  final TextEditingController districtController;
+  final TextEditingController postalCodeController;
 
-  ProfileBasicInfo(
-      {this.formKey,
-      this.firstNameController,
-      this.lastNameController,
-      this.genderDropDownValue,
-      this.genderDropdownChange,
-      this.getSelectedProfilePic,
-      this.mobileController});
+  ProfileBasicInfo({
+    this.formKey,
+    this.firstNameController,
+    this.lastNameController,
+    this.genderDropDownValue,
+    this.genderDropdownChange,
+    this.getSelectedProfilePic,
+    this.mobileController,
+    this.provinceController,
+    this.addressController,
+    this.cityController,
+    this.districtController,
+    this.postalCodeController,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -193,6 +204,143 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                       .toList(),
                 ),
               ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter Address';
+                    }
+                    return null;
+                  },
+                  onEditingComplete: () {
+                    FocusScope.of(context).nextFocus();
+                  },
+                  controller: widget.addressController,
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    labelText: 'Address',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)),
+                    contentPadding: EdgeInsets.only(
+                        top: 0, bottom: 10, left: 10, right: 10),
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    child: TextFormField(
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter City';
+                        }
+                        return null;
+                      },
+                      onEditingComplete: () {
+                        FocusScope.of(context).nextFocus();
+                      },
+                      controller: widget.cityController,
+                      decoration: InputDecoration(
+                        errorMaxLines: 20,
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        labelText: 'City',
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 10, left: 10, right: 10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 20,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    child: TextFormField(
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter District';
+                        }
+                        return null;
+                      },
+                      onEditingComplete: () {
+                        FocusScope.of(context).nextFocus();
+                      },
+                      controller: widget.districtController,
+                      decoration: InputDecoration(
+                        errorMaxLines: 20,
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        labelText: 'District',
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 10, left: 10, right: 10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    child: TextFormField(
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Province';
+                        }
+                        return null;
+                      },
+                      onEditingComplete: () {
+                        FocusScope.of(context).nextFocus();
+                      },
+                      controller: widget.provinceController,
+                      decoration: InputDecoration(
+                        errorMaxLines: 20,
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        labelText: 'Province',
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 10, left: 10, right: 10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 20,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Postal Code';
+                        }
+                        return null;
+                      },
+                      onEditingComplete: () {
+                        FocusScope.of(context).nextFocus();
+                      },
+                      controller: widget.postalCodeController,
+                      decoration: InputDecoration(
+                        errorMaxLines: 20,
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        labelText: 'Postal Code',
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 10, left: 10, right: 10),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         )

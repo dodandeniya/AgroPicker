@@ -13,9 +13,8 @@ class Profile extends StatefulWidget {
 
 class _Profile extends State<Profile> {
   int stepIndex = 0;
-  int stepsCount = 2;
+  int stepsCount = 1;
   final GlobalKey<FormState> basicInfoKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> contactInfoKey = GlobalKey<FormState>();
   final ProfileController profileController = ProfileController();
   bool isLoading = false;
   String message = '';
@@ -92,7 +91,6 @@ class _Profile extends State<Profile> {
           body: GestureDetector(
             child: ProfilePage(
               basicInfoKey: basicInfoKey,
-              contactInfoKey: contactInfoKey,
               stepIndex: stepIndex,
               profileController: profileController,
             ),
@@ -105,38 +103,13 @@ class _Profile extends State<Profile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                stepIndex == 0
-                    ? Container(
-                        height: 0,
-                      )
-                    : FlatButton(
-                        onPressed: () {
-                          if (stepIndex > 0) {
-                            setState(() {
-                              stepIndex--;
-                            });
-                          }
-                        },
-                        child: Text('Previous')),
-                stepIndex == stepsCount - 1
-                    ? FlatButton(
-                        onPressed: () {
-                          if (contactInfoKey.currentState.validate()) {
-                            profileController.completeProfile();
-                          }
-                        },
-                        child: Text('Finish'))
-                    : FlatButton(
-                        onPressed: () {
-                          if (stepIndex == 0) {
-                            if (basicInfoKey.currentState.validate()) {
-                              setState(() {
-                                stepIndex++;
-                              });
-                            }
-                          }
-                        },
-                        child: Text('Next'))
+                FlatButton(
+                    onPressed: () {
+                      if (basicInfoKey.currentState.validate()) {
+                        profileController.completeProfile();
+                      }
+                    },
+                    child: Text('Finish'))
               ],
             ),
           ),
