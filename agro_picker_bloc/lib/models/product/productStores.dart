@@ -13,9 +13,11 @@ class ProductStores {
   final Products product;
   final dynamic price;
   final StockAvailabilty status;
+  final String productImage;
 
-  ProductStores(this.venderId, this.isVenderOnline, this.product, this.price,
-      this.status) {
+  ProductStores(
+      this.venderId, this.isVenderOnline, this.product, this.price, this.status,
+      {this.productImage}) {
     this.storeId = Uuid().v1();
   }
 

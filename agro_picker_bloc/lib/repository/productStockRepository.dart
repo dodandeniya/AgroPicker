@@ -3,26 +3,26 @@ import 'package:agro_picker_bloc/models/models.dart';
 import 'package:agro_picker_bloc/singletons/singletons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OrderRepository {
+class ProductStockRepository {
   final FirebaseInterface db = FirebaseInterface();
   final Users user = UserStatusSingleton.getInstance().user;
 
-  Stream<QuerySnapshot> getOrdersBySearch(String searchKey) {
+  Stream<QuerySnapshot> getStockBySearch(String searchKey) {
     List<FirebaseQueryParameter> param = [
       FirebaseQueryParameter(
           fieldName: 'venderId',
           fieldValue: user.userId,
           queryMethod: QueryMethod.isEqualTo),
       FirebaseQueryParameter(
-          fieldName: 'orderItem.name',
+          fieldName: 'product.name',
           fieldValue: searchKey,
           queryMethod: QueryMethod.arrayContainsAny),
     ];
 
-    return db.getQueryObject<Orders>(param);
+    return db.getQueryObject<ProductStores>(param);
   }
 
-  Stream<QuerySnapshot> getAllOrders() {
+  Stream<QuerySnapshot> getAllStocks() {
     List<FirebaseQueryParameter> param = [
       FirebaseQueryParameter(
           fieldName: 'venderId',
@@ -30,31 +30,31 @@ class OrderRepository {
           queryMethod: QueryMethod.isEqualTo),
     ];
 
-    return db.getQueryObject<Orders>(param);
+    return db.getQueryObject<ProductStores>(param);
   }
 
-  Future<bool> insertOrder(Orders order) async {
+  Future<bool> insertStock(ProductStores stock) async {
     try {
-      await db.insertDocumentData<Orders>(order.toJson(), order.orderId);
+      await db.insertDocumentData<ProductStores>(stock.toJson(), stock.storeId);
       return true;
     } catch (e) {
       return false;
     }
   }
 
-  Future<bool> updateOrder(
-      Map<dynamic, dynamic> updateItem, String orderId) async {
+  Future<bool> updateStock(
+      Map<dynamic, dynamic> updateItem, String stockId) async {
     try {
-      await db.updateData<Orders>(updateItem, orderId);
+      await db.updateData<ProductStores>(updateItem, stockId);
       return true;
     } catch (e) {
       return false;
     }
   }
 
-  Future<bool> deleteOrder(String orderId) async {
+  Future<bool> deleteStock(String stockId) async {
     try {
-      await db.deleteData<Orders>(orderId);
+      await db.deleteData<ProductStores>(stockId);
       return true;
     } catch (e) {
       return false;

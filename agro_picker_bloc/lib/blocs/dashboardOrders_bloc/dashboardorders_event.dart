@@ -43,3 +43,20 @@ class CreateOrder extends DashboardordersEvent {
   @override
   List<Object> get props => [order];
 }
+
+class UpdateOrder extends DashboardordersEvent {
+  final Map<dynamic, dynamic> updateItem;
+  final String orderId;
+  const UpdateOrder(this.updateItem, this.orderId);
+
+  @override
+  List<Object> get props => [updateItem, orderId];
+}
+
+class DeleteOrder extends DashboardordersEvent {
+  final String orderId;
+  const DeleteOrder(this.orderId);
+
+  @override
+  List<Object> get props => [orderId];
+}
