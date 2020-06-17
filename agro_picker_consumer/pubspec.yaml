@@ -31,6 +31,10 @@ dependencies:
   agro_picker_bloc:
     path: ../agro_picker_bloc
   google_fonts: ^1.1.0
+  cloud_firestore: ^0.13.5
+  uuid: ^2.0.4
+  file_picker: ^1.11.0+3
+  image_picker: ^0.6.7+1
 
 dev_dependencies:
   flutter_test:
