@@ -16,7 +16,7 @@ class _OrderList extends State<OrderList> {
     return Container(
       child: Column(
         children: <Widget>[
-          SearchBar('Search Order', searchOrder),
+          SearchBar('Search Order', searchOrder, clearOrder),
           ListTile(
             title: Text('Pending Orders'),
             subtitle: Text('Count : 16'),
@@ -51,4 +51,6 @@ class _OrderList extends State<OrderList> {
       selected[index] = true;
     });
   }
+
+  void clearOrder() {}
 }

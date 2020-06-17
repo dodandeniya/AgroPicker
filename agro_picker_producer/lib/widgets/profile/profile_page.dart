@@ -191,7 +191,8 @@ class _ProfilePage extends State<ProfilePage> {
         agroProfile: AgroProfile(
             regNumber: businessController.text.trim(),
             profileType: selectedProfileType),
-        role: 1);
+        role: 1,
+        isOnline: true);
     profileBloc.add(InsertProfile(user: profileController.userProfile));
   }
 

@@ -39,9 +39,19 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
         BlocProvider<UserStatusBloc>(
           create: (c) => UserStatusBloc(),
         ),
+        BlocProvider<DashboardordersBloc>(
+          create: (c) => DashboardordersBloc(),
+        ),
+        BlocProvider<DashboardproductstockBloc>(
+          create: (c) => DashboardproductstockBloc(),
+        ),
       ],
       child: SafeArea(
-        child: Scaffold(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
             drawer: Container(
               width: 250,
               child: Drawer(
@@ -51,6 +61,9 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
             appBar: AppBar(
               title: Text('Agro Picker'),
               bottom: TabBar(
+                onTap: (ind) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: _tabController,
                 tabs: _tabs
                     .map((e) => Tab(
@@ -59,14 +72,11 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                     .toList(),
               ),
             ),
-            body: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: HomeScreen(
-                tabController: _tabController,
-              ),
-            )),
+            body: HomeScreen(
+              tabController: _tabController,
+            ),
+          ),
+        ),
       ),
     );
   }
