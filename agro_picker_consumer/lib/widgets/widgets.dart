@@ -1,9 +1,15 @@
 export 'login.dart';
 export 'registration.dart';
-export 'splash.dart';
+export 'splashscreen.dart';
 export 'dashboard.dart';
 export 'login/login_page.dart';
 export 'register/registration_page.dart';
 export 'register/registration_email.dart';
 export 'register/registration_success.dart';
 export 'dashboard/dashboard_page.dart';
+export 'common/circularprogress.dart';
+export 'common/searchbar.dart';
+export 'common/file_pick.dart';
+export 'profile.dart';
+export 'profile/profile_page.dart';
+export 'profile/profile_basicinfo.dart';

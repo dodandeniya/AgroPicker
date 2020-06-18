@@ -50,7 +50,11 @@ class AuthenticationBloc
 
       if (document.isProfileCompleted != null &&
           document.isProfileCompleted == true) {
-        yield Authenticated(await _userRepository.getUser());
+        if (document.profileState == AgroProfileState.Approved) {
+          yield Authenticated(await _userRepository.getUser());
+        } else {
+          yield ProfileCompleted();
+        }
         user.setUserStatus(document);
       } else {
         yield PendingProfileCompletion();
