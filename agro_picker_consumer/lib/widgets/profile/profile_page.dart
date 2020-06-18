@@ -54,23 +54,21 @@ class _ProfilePage extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: ProfileBasicInfo(
-          firstNameController: firstNameController,
-          lastNameController: lastNameController,
-          formKey: widget.basicInfoKey,
-          mobileController: mobileController,
-          genderDropdownChange: genderDropDownChange,
-          genderDropDownValue: genderDropDownValue,
-          getSelectedProfilePic: getProfilePicFile,
-          provinceController: provinceController,
-          addressController: addressController,
-          cityController: cityController,
-          districtController: districtController,
-          postalCodeController: postalCodeController,
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      child: ProfileBasicInfo(
+        firstNameController: firstNameController,
+        lastNameController: lastNameController,
+        formKey: widget.basicInfoKey,
+        mobileController: mobileController,
+        genderDropdownChange: genderDropDownChange,
+        genderDropDownValue: genderDropDownValue,
+        getSelectedProfilePic: getProfilePicFile,
+        provinceController: provinceController,
+        addressController: addressController,
+        cityController: cityController,
+        districtController: districtController,
+        postalCodeController: postalCodeController,
       ),
     );
   }
