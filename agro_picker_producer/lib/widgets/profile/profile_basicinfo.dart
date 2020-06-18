@@ -52,9 +52,14 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                     children: <Widget>[
                       Container(
                         child: _image == null
-                            ? Icon(
-                                Icons.person,
-                                size: 50,
+                            ? CircleAvatar(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                radius: 50,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 50,
+                                ),
                               )
                             : CircleAvatar(
                                 backgroundColor: Colors.white,
