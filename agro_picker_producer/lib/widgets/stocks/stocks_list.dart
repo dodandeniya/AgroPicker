@@ -75,8 +75,7 @@ class _StocksList extends State<StocksList> {
   }
 
   void searchStock(String stockName) {
-    dashboardStocksBloc
-        .add(StartStockSearchEvent(stockName.firstLetterCapital));
+    dashboardStocksBloc.add(StartStockSearchEvent(stockName.toLowerCase()));
   }
 
   void clearSearch() {

@@ -75,8 +75,7 @@ class _OrderList extends State<OrderList> {
     setState(() {
       pendingOrderCount = 0;
     });
-    dashboardordersBloc
-        .add(StartOrderSearchEvent(orderName.firstLetterCapital));
+    dashboardordersBloc.add(StartOrderSearchEvent(orderName.toLowerCase()));
   }
 
   void clearOrder() {
