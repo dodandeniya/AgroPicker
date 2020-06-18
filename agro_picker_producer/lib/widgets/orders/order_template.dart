@@ -42,7 +42,8 @@ class _OrderTemplate extends State<OrderTemplate> {
             SizedBox(
               height: 15,
             ),
-            Text('Ordered Item : ${widget.order.orderItem.name}'),
+            Text(
+                'Ordered Item : ${widget.order.orderItem.name.firstLetterCapital}'),
             SizedBox(
               height: 15,
             )

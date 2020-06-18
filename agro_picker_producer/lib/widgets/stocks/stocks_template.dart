@@ -35,7 +35,7 @@ class _StocksTemplate extends State<StocksTemplate> {
       child: ListTile(
         enabled: true,
         title: Text(
-            '${widget.productStores.product.type.name} > ${widget.productStores.product.name}'),
+            '${widget.productStores.product.type.name.firstLetterCapital} > ${widget.productStores.product.name.firstLetterCapital}'),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
         isThreeLine: true,
         subtitle: Container(

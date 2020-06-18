@@ -192,7 +192,8 @@ class _ProfilePage extends State<ProfilePage> {
             regNumber: businessController.text.trim(),
             profileType: selectedProfileType),
         role: 1,
-        profileState: AgroProfileState.Pending);
+        profileState: AgroProfileState.Pending,
+        isOnline: true);
     profileBloc.add(InsertProfile(user: profileController.userProfile));
   }
 
