@@ -7,6 +7,7 @@ export 'register/registration_page.dart';
 export 'register/registration_email.dart';
 export 'register/registration_success.dart';
 export 'dashboard/dashboard_page.dart';
+export 'dashboard/dashboardDrawer.dart';
 export 'common/circularprogress.dart';
 export 'common/searchbar.dart';
 export 'common/file_pick.dart';

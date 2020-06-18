@@ -33,19 +33,6 @@ class _DashBoardPageState extends State<DashboardPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Dashboard'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () {
-                BlocProvider.of<AuthenticationBloc>(context).add(
-                  LoggedOut(),
-                );
-              },
-            )
-          ],
-        ),
         body: _buildTest(context),
       ),
     );
