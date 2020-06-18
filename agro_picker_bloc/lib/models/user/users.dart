@@ -51,9 +51,8 @@ class Users {
       this.dateTime,
       this.isOnline,
       this.isProfileCompleted,
-      this.totalIncome}) {
-    this.profileState = AgroProfileState.Pending;
-  }
+      this.totalIncome,
+      this.profileState});
 
   static GeoPoint _geoDataFromJson(GeoPoint jsonObj) {
     if (jsonObj != null) {

@@ -26,11 +26,21 @@ class Main extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is Uninitialized) {
-            return SplashScreen();
+            return SplashScreen('Authenticating');
           }
 
           if (state is PendingProfileCompletion) {
-            return SplashScreen();
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider<ProfileBloc>(
+                  create: (context) => ProfileBloc(),
+                ),
+                BlocProvider<FileuploadBloc>(
+                  create: (context) => FileuploadBloc(),
+                ),
+              ],
+              child: Profile(),
+            );
           }
 
           if (state is Authenticated) {
