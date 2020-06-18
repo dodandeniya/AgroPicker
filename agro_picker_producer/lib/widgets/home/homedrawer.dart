@@ -34,7 +34,10 @@ class _HomeDrawer extends State<HomeDrawer> {
             child: Column(
               children: <Widget>[
                 userStatusSingleton.image == null
-                    ? Icon(Icons.person)
+                    ? Icon(
+                        Icons.person,
+                        size: 75,
+                      )
                     : CircleAvatar(
                         backgroundColor: Theme.of(context).accentColor,
                         radius: 50,
