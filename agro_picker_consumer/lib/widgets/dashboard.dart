@@ -11,18 +11,48 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardView extends State<Dashboard> {
+  final UserStatusSingleton userStatusSingleton =
+      UserStatusSingleton.getInstance();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (userStatusSingleton.image != null) {
+      precacheImage(userStatusSingleton.image.image, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: BlocProvider<DashboardBloc>(
-              create: (c) => DashboardBloc(),
-              child: DashboardPage(),
-            )),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DashboardBloc>(
+          create: (c) => DashboardBloc(),
+        ),
+        BlocProvider<DashboardordersBloc>(
+          create: (c) => DashboardordersBloc(),
+        ),
+        BlocProvider<DashboardproductstockBloc>(
+          create: (c) => DashboardproductstockBloc(),
+        ),
+      ],
+      child: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+              drawer: Container(
+                width: 250,
+                child: Drawer(
+                  child: DashboardDrawer(),
+                ),
+              ),
+              appBar: AppBar(
+                title: Text('Agro Picker Dashboard'),
+              ),
+              body: DashboardPage()),
+        ),
       ),
     );
   }
