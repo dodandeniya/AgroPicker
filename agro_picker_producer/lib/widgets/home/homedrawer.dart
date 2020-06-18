@@ -33,13 +33,13 @@ class _HomeDrawer extends State<HomeDrawer> {
             decoration: BoxDecoration(color: Theme.of(context).accentColor),
             child: Column(
               children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: Theme.of(context).accentColor,
-                  radius: 50,
-                  child: ClipOval(
-                    child: userStatusSingleton.image,
-                  ),
-                ),
+                userStatusSingleton.image == null
+                    ? Icon(Icons.person)
+                    : CircleAvatar(
+                        backgroundColor: Theme.of(context).accentColor,
+                        radius: 50,
+                        backgroundImage: userStatusSingleton.image.image,
+                      ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   alignment: Alignment.topCenter,

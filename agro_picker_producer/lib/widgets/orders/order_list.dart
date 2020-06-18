@@ -1,5 +1,7 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderList extends StatefulWidget {
   @override
@@ -9,7 +11,15 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderList extends State<OrderList> {
-  List<bool> selected = [false, false];
+  DashboardordersBloc dashboardordersBloc;
+  int pendingOrderCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    dashboardordersBloc = BlocProvider.of<DashboardordersBloc>(context);
+    dashboardordersBloc.add(StartOrderBoardUpdateEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +29,42 @@ class _OrderList extends State<OrderList> {
           SearchBar('Search Order', searchOrder, clearOrder),
           ListTile(
             title: Text('Pending Orders'),
-            subtitle: Text('Count : 16'),
+            subtitle: Text('Count : $pendingOrderCount'),
           ),
-          Expanded(
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return OrderTemplate(
-                      '34005698',
-                      'June 15, 2020 at 9:46:14 PM',
-                      selected[index],
-                      selectOrder,
-                      index);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: 2),
+          BlocConsumer<DashboardordersBloc, DashboardordersState>(
+            listener: (context, state) {
+              if (state is UpdateOrdersList) {
+                setState(() {
+                  pendingOrderCount = state.orderList.length;
+                });
+              }
+            },
+            builder: (context, state) {
+              if (state is EmptyOrderList) {
+                return Expanded(
+                  child: Center(
+                    child: Text('No Order to Show'),
+                  ),
+                );
+              }
+              if (state is UpdateOrdersList) {
+                return Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return OrderTemplate(state.orderList[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                      itemCount: state.orderList.length),
+                );
+              }
+              return Expanded(
+                child: Center(
+                  child: CircularProgress(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -43,13 +73,6 @@ class _OrderList extends State<OrderList> {
 
   void searchOrder(String orderName) {
     print(orderName);
-  }
-
-  void selectOrder(int index) {
-    setState(() {
-      selected = selected.map((e) => e = false).toList();
-      selected[index] = true;
-    });
   }
 
   void clearOrder() {}

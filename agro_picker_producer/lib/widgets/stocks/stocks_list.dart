@@ -11,7 +11,6 @@ class StocksList extends StatefulWidget {
 }
 
 class _StocksList extends State<StocksList> {
-  List<bool> selected = [false, false];
   DashboardproductstockBloc dashboardStocksBloc;
 
   @override
@@ -55,8 +54,8 @@ class _StocksList extends State<StocksList> {
                 return Expanded(
                   child: ListView.separated(
                       itemBuilder: (context, index) {
-                        return StocksTemplate(state.orderList[index],
-                            'Wal-Penera', selected[index], selectStock, index);
+                        return StocksTemplate(
+                            state.orderList[index], 'Wal-Penera');
                       },
                       separatorBuilder: (context, index) {
                         return const Divider();
@@ -78,13 +77,6 @@ class _StocksList extends State<StocksList> {
   void searchStock(String stockName) {
     dashboardStocksBloc
         .add(StartStockSearchEvent(stockName.firstLetterCapital));
-  }
-
-  void selectStock(int index) {
-    setState(() {
-      selected = selected.map((e) => e = false).toList();
-      selected[index] = true;
-    });
   }
 
   void clearSearch() {

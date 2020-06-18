@@ -5,11 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StocksTemplate extends StatefulWidget {
   final ProductStores productStores;
   final String vendorName;
-  final bool isSelected;
-  final Function selectStocks;
-  final int index;
-  StocksTemplate(this.productStores, this.vendorName, this.isSelected,
-      this.selectStocks, this.index);
+  StocksTemplate(this.productStores, this.vendorName);
 
   @override
   State<StatefulWidget> createState() {
@@ -37,7 +33,6 @@ class _StocksTemplate extends State<StocksTemplate> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        selected: widget.isSelected,
         enabled: true,
         title: Text(
             '${widget.productStores.product.type.name} > ${widget.productStores.product.name}'),
@@ -72,9 +67,7 @@ class _StocksTemplate extends State<StocksTemplate> {
             );
           },
         ),
-        onTap: () {
-          widget.selectStocks(widget.index);
-        },
+        onTap: () {},
       ),
     );
   }

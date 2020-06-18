@@ -73,6 +73,7 @@ class DashboardordersBloc
       for (var item in ordersList) {
         orders.add(Orders.fromJson(item.data));
       }
+      await Future.delayed(Duration(seconds: 5));
       yield UpdateOrdersList(orders);
     } else {
       yield EmptyOrderList();

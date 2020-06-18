@@ -26,7 +26,9 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(userStatusSingleton.image.image, context);
+    if (userStatusSingleton.image != null) {
+      precacheImage(userStatusSingleton.image.image, context);
+    }
   }
 
   @override
