@@ -51,16 +51,17 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                   child: Stack(
                     children: <Widget>[
                       Container(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          radius: 50,
-                          child: _image == null
-                              ? Icon(Icons.person)
-                              : ClipOval(
-                                  child: Image.file(_image),
-                                ),
-                        ),
+                        child: _image == null
+                            ? Icon(
+                                Icons.person,
+                                size: 50,
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                radius: 50,
+                                backgroundImage: FileImage(_image),
+                              ),
                       ),
                       Positioned(
                         child: Container(
@@ -199,12 +200,16 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
     );
   }
 
-  Future getImage() async {
+  Future<void> getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = File(pickedFile.path);
-      widget.getSelectedProfilePic(_image);
-    });
+    if (pickedFile != null) {
+      setState(
+        () {
+          _image = File(pickedFile.path);
+          widget.getSelectedProfilePic(_image);
+        },
+      );
+    }
   }
 }

@@ -1,16 +1,14 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderTemplate extends StatefulWidget {
-  final String orderId;
-  final String time;
-  final bool isSelected;
-  final Function selectedOrder;
-  final int index;
+  final Orders order;
 
   OrderTemplate(
-      this.orderId, this.time, this.isSelected, this.selectedOrder, this.index);
+    this.order,
+  );
 
   @override
   State<StatefulWidget> createState() {
@@ -35,40 +33,66 @@ class _OrderTemplate extends State<OrderTemplate> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        selected: widget.isSelected,
         enabled: true,
-        title: Text('Order ID : ${widget.orderId}'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Order ID : '),
+            Text('${widget.order.orderId}'),
+            SizedBox(
+              height: 15,
+            ),
+            Text('Ordered Item : ${widget.order.orderItem.name}'),
+            SizedBox(
+              height: 15,
+            )
+          ],
+        ),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
         isThreeLine: true,
-        subtitle: Text('Time : ${widget.time}'),
-        trailing: DropdownButton(
-          value: selectedStatus,
-          underline: Container(),
-          items: orderStatuses
-              .map<DropdownMenuItem<String>>(
-                (e) => DropdownMenuItem<String>(
-                  value: e,
-                  child: Text(e),
-                ),
-              )
-              .toList(),
-          onChanged: (value) {
-            setState(() {
-              selectedStatus = value;
-            });
-            print(value);
-          },
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+                'Ordered Time : ${formattedDate(widget.order.orderDateTime.toDate())}'),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              alignment: Alignment.bottomRight,
+              child: DropdownButton(
+                value: selectedStatus,
+                underline: Container(),
+                items: orderStatuses
+                    .map<DropdownMenuItem<String>>(
+                      (e) => DropdownMenuItem<String>(
+                        value: e,
+                        child: Text(e),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedStatus = value;
+                  });
+                  print(value);
+                },
+              ),
+            )
+          ],
         ),
         onTap: () {
-          widget.selectedOrder(widget.index);
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OrderDetails(widget.orderId),
+              builder: (context) => OrderDetails(widget.order.orderId),
             ),
           );
         },
       ),
     );
   }
+
+  String formattedDate(DateTime dateTime) =>
+      DateFormat.yMMMMEEEEd().add_jms().format(dateTime);
 }

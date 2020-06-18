@@ -1,15 +1,11 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
-import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StocksTemplate extends StatefulWidget {
-  final String stockName;
+  final ProductStores productStores;
   final String vendorName;
-  final bool isSelected;
-  final Function selectStocks;
-  final int index;
-  StocksTemplate(this.stockName, this.vendorName, this.isSelected,
-      this.selectStocks, this.index);
+  StocksTemplate(this.productStores, this.vendorName);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,19 +15,27 @@ class StocksTemplate extends StatefulWidget {
 
 class _StocksTemplate extends State<StocksTemplate> {
   final List<String> stocksAvailabiltyList = [
-    StockAvailabilty.Available.asString(),
+    StockAvailabilty.Available.splitString(),
     StockAvailabilty.Not_Available.splitString(),
     StockAvailabilty.Sold_Out.splitString(),
   ];
-  String selectedStockAvailability = StockAvailabilty.Available.asString();
+  String selectedStockAvailability;
+  DashboardproductstockBloc dashboardproductstockBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    dashboardproductstockBloc =
+        BlocProvider.of<DashboardproductstockBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        selected: widget.isSelected,
         enabled: true,
-        title: Text('${widget.stockName}'),
+        title: Text(
+            '${widget.productStores.product.type.name} > ${widget.productStores.product.name}'),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
         isThreeLine: true,
         subtitle: Container(
@@ -43,7 +47,7 @@ class _StocksTemplate extends State<StocksTemplate> {
           ),
         ),
         trailing: DropdownButton(
-          value: selectedStockAvailability,
+          value: widget.productStores.status.splitString(),
           underline: Container(),
           items: stocksAvailabiltyList
               .map<DropdownMenuItem<String>>(
@@ -54,15 +58,16 @@ class _StocksTemplate extends State<StocksTemplate> {
               )
               .toList(),
           onChanged: (value) {
-            setState(() {
-              selectedStockAvailability = value;
-            });
-            print(value);
+            var selectedValue = StockAvailabilty.values
+                .firstWhere((element) => element.splitString() == value);
+
+            var updatedValue = {'status': selectedValue.asString()};
+            dashboardproductstockBloc.add(
+              UpdateStockItem(updatedValue, widget.productStores.storeId),
+            );
           },
         ),
-        onTap: () {
-          widget.selectStocks(widget.index);
-        },
+        onTap: () {},
       ),
     );
   }

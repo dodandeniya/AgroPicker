@@ -12,7 +12,7 @@ class ProductStores {
   final bool isVenderOnline;
   final Products product;
   final dynamic price;
-  final StockAvailabilty status;
+  StockAvailabilty status;
   final String productImage;
 
   ProductStores(

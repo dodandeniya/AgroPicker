@@ -56,15 +56,14 @@ class DashboardproductstockBloc
 
   Stream<DashboardproductstockState> _mapStockBoardUpdateListnerEventToState(
       StockBoardUpdateListner event) async* {
-    yield DashboardStockLoading();
-
-    List<ProductStores> stocks;
+    List<ProductStores> stocks = [];
     var stockList = event.docs.toList();
 
     if (stockList != null || stockList.isEmpty == false) {
       for (var item in stockList) {
         stocks.add(ProductStores.fromJson(item.data));
       }
+      await Future.delayed(Duration(seconds: 5));
       yield UpdateStocksList(stocks);
     } else {
       yield EmptyStockList();
@@ -82,13 +81,14 @@ class DashboardproductstockBloc
 
   Stream<DashboardproductstockState> _mapStockSearchListnerToState(
       StockSearchListner event) async* {
-    List<ProductStores> stocks;
+    List<ProductStores> stocks = [];
     var stockList = event.docs.toList();
 
     if (stockList != null || stockList.isEmpty == false) {
       for (var item in stockList) {
         stocks.add(ProductStores.fromJson(item.data));
       }
+      await Future.delayed(Duration(seconds: 5));
       yield UpdateStocksList(stocks);
     } else {
       yield EmptyStockList();

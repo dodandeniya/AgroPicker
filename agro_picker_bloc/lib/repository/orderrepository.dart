@@ -16,7 +16,11 @@ class OrderRepository {
       FirebaseQueryParameter(
           fieldName: 'orderItem.name',
           fieldValue: searchKey,
-          queryMethod: QueryMethod.arrayContainsAny),
+          queryMethod: QueryMethod.isGreaterThanOrEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'orderItem.name',
+          fieldValue: searchKey + 'z',
+          queryMethod: QueryMethod.isLessThan),
     ];
 
     return db.getQueryObject<Orders>(param);

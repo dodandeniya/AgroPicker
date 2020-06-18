@@ -15,7 +15,6 @@ export 'profile/profile_businessinfo.dart';
 export 'profile/profile_contactinfo.dart';
 export 'common/file_pick.dart';
 export 'stocks/stocks_list.dart';
-export 'orders/order_creation.dart';
 export 'orders/order_details.dart';
 export 'orders/order_list.dart';
 export 'home/homesummary.dart';

@@ -16,7 +16,11 @@ class ProductStockRepository {
       FirebaseQueryParameter(
           fieldName: 'product.name',
           fieldValue: searchKey,
-          queryMethod: QueryMethod.arrayContainsAny),
+          queryMethod: QueryMethod.isGreaterThanOrEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'product.name',
+          fieldValue: searchKey + 'z',
+          queryMethod: QueryMethod.isLessThan),
     ];
 
     return db.getQueryObject<ProductStores>(param);

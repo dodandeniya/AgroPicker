@@ -11,6 +11,8 @@ class UserStatusSingleton {
 
   void setUserStatus(Users user) {
     this.user = user;
-    image = Image.network(user.profileImage);
+    if (user.profileImage != null) {
+      image = Image.network(user.profileImage);
+    }
   }
 }

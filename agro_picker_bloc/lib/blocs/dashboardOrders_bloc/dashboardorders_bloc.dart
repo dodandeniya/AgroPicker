@@ -64,7 +64,7 @@ class DashboardordersBloc
   Stream<DashboardordersState> _mapOrderBoardUpdateListnerToState(
       OrderBoardUpdateListner event) async* {
     yield DashboardLoading();
-    List<Orders> orders;
+    List<Orders> orders = [];
     var ordersList = event.docs
         .where((element) => element.data['status'] != 'Completed')
         .toList();
@@ -73,6 +73,7 @@ class DashboardordersBloc
       for (var item in ordersList) {
         orders.add(Orders.fromJson(item.data));
       }
+      await Future.delayed(Duration(seconds: 5));
       yield UpdateOrdersList(orders);
     } else {
       yield EmptyOrderList();

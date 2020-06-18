@@ -37,16 +37,3 @@ enum StockAvailabilty {
   Sold_Out,
   Not_Available,
 }
-
-extension EnumsExtenstion on Object {
-  String asString() => toString().split('.').last;
-
-  String splitString() {
-    var val = this.asString().split('_');
-    String fullString = '';
-    val.forEach((element) {
-      fullString += '$element ';
-    });
-    return fullString;
-  }
-}

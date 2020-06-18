@@ -1,5 +1,7 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StocksList extends StatefulWidget {
   @override
@@ -9,13 +11,21 @@ class StocksList extends StatefulWidget {
 }
 
 class _StocksList extends State<StocksList> {
-  List<bool> selected = [false, false];
+  DashboardproductstockBloc dashboardStocksBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    dashboardStocksBloc = BlocProvider.of<DashboardproductstockBloc>(context);
+    dashboardStocksBloc.add(StartStockBoardUpdateEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
-          SearchBar('Search for an Item', searchOrder),
+          SearchBar('Search for an Item', searchStock, clearSearch),
           Container(
             alignment: Alignment.topCenter,
             child: RaisedButton(
@@ -31,30 +41,45 @@ class _StocksList extends State<StocksList> {
               textTheme: ButtonTextTheme.primary,
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return StocksTemplate('Vegetable>Greens>Exotic', 'Wal-Penera',
-                      selected[index], selectStock, index);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: 2),
+          BlocBuilder<DashboardproductstockBloc, DashboardproductstockState>(
+            builder: (context, state) {
+              if (state is EmptyStockList) {
+                return Expanded(
+                  child: Center(
+                    child: Text('No Stocks to Show'),
+                  ),
+                );
+              }
+              if (state is UpdateStocksList) {
+                return Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return StocksTemplate(
+                            state.orderList[index], 'Wal-Penera');
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                      itemCount: state.orderList.length),
+                );
+              }
+              return Expanded(
+                  child: Center(
+                child: CircularProgress(),
+              ));
+            },
           ),
         ],
       ),
     );
   }
 
-  void searchOrder(String orderName) {
-    print(orderName);
+  void searchStock(String stockName) {
+    dashboardStocksBloc
+        .add(StartStockSearchEvent(stockName.firstLetterCapital));
   }
 
-  void selectStock(int index) {
-    setState(() {
-      selected = selected.map((e) => e = false).toList();
-      selected[index] = true;
-    });
+  void clearSearch() {
+    dashboardStocksBloc.add(StartStockBoardUpdateEvent());
   }
 }
