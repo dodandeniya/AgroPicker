@@ -26,7 +26,7 @@ class _OrderList extends State<OrderList> {
     return Container(
       child: Column(
         children: <Widget>[
-          SearchBar('Search Order', searchOrder, clearOrder),
+          SearchBar('Search By Order Item', searchOrder, clearOrder),
           ListTile(
             title: Text('Pending Orders'),
             subtitle: Text('Count : $pendingOrderCount'),
@@ -72,8 +72,17 @@ class _OrderList extends State<OrderList> {
   }
 
   void searchOrder(String orderName) {
-    print(orderName);
+    setState(() {
+      pendingOrderCount = 0;
+    });
+    dashboardordersBloc
+        .add(StartOrderSearchEvent(orderName.firstLetterCapital));
   }
 
-  void clearOrder() {}
+  void clearOrder() {
+    setState(() {
+      pendingOrderCount = 0;
+    });
+    dashboardordersBloc.add(StartOrderBoardUpdateEvent());
+  }
 }

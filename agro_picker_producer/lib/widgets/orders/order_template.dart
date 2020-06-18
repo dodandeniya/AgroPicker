@@ -41,6 +41,10 @@ class _OrderTemplate extends State<OrderTemplate> {
             Text('${widget.order.orderId}'),
             SizedBox(
               height: 15,
+            ),
+            Text('Ordered Item : ${widget.order.orderItem.name}'),
+            SizedBox(
+              height: 15,
             )
           ],
         ),
