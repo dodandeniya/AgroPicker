@@ -41,7 +41,14 @@ class _Profile extends State<Profile> {
               }
             }
             if (state is ProfileUpdated) {
-              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+              setState(() {
+                isLoading = true;
+                message =
+                    'Profile has been created successfully. \n Please contact Administrator to Approve it.';
+              });
+              Future.delayed(Duration(seconds: 5), () {
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+              });
             }
           },
         ),
