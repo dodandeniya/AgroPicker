@@ -33,6 +33,10 @@ class _StocksTemplate extends State<StocksTemplate> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Theme.of(context).accentColor,
+          backgroundImage: NetworkImage(widget.productStores.productImage),
+        ),
         enabled: true,
         title: Text(
             '${widget.productStores.product.type.name} > ${widget.productStores.product.name}'),
