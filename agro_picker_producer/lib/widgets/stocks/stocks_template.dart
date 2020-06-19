@@ -67,7 +67,6 @@ class _StocksTemplate extends State<StocksTemplate> {
             );
           },
         ),
-        onTap: () {},
       ),
     );
   }
