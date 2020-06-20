@@ -236,9 +236,10 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width / 2 - 30,
+                      width: MediaQuery.of(context).size.width / 2,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: TextFormField(
@@ -265,7 +266,7 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      width: MediaQuery.of(context).size.width / 2,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: TextFormField(
@@ -294,9 +295,10 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width / 2 - 30,
+                      width: MediaQuery.of(context).size.width / 2,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: TextFormField(
@@ -323,7 +325,7 @@ class _ProfileBasicInfo extends State<ProfileBasicInfo> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      width: MediaQuery.of(context).size.width / 2,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: TextFormField(

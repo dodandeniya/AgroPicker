@@ -28,6 +28,18 @@ class _ProductStockList extends State<ProductStockList> {
         children: <Widget>[
           SearchBar(
               'Search By Stock Item', searchStockItem, clearSearchResults),
+          Center(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetails(),
+                  ),
+                );
+              },
+            ),
+          )
 
           /*BlocConsumer<DashboardordersBloc, DashboardordersState>(
             listener: (context, state) {

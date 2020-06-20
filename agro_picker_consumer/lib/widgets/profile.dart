@@ -107,7 +107,7 @@ class _Profile extends State<Profile> {
           bottomNavigationBar: Card(
             elevation: 2,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FlatButton(
                     onPressed: () {
