@@ -55,7 +55,7 @@ class _StocksList extends State<StocksList> {
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         return StocksTemplate(
-                            state.orderList[index], 'Wal-Perera');
+                            state.orderList[index], 'Wal-Penela');
                       },
                       separatorBuilder: (context, index) {
                         return const Divider();
