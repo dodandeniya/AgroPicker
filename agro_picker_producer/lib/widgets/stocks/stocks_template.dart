@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StocksTemplate extends StatefulWidget {
   final ProductStores productStores;
-  final String vendorName;
-  StocksTemplate(this.productStores, this.vendorName);
+  StocksTemplate(this.productStores);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,14 +41,6 @@ class _StocksTemplate extends State<StocksTemplate> {
             '${widget.productStores.product.type.name.firstLetterCapital} > ${widget.productStores.product.name.firstLetterCapital}'),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
         isThreeLine: true,
-        subtitle: Container(
-          alignment: Alignment.topLeft,
-          child: Column(
-            children: <Widget>[
-              Text('${widget.vendorName}'),
-            ],
-          ),
-        ),
         trailing: DropdownButton(
           value: widget.productStores.status.splitString(),
           underline: Container(),
