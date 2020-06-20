@@ -15,5 +15,6 @@ export 'profile.dart';
 export 'profile/profile_page.dart';
 export 'profile/profile_basicinfo.dart';
 export 'productStock/productStockList.dart';
+export 'productStock/productDetails.dart';
 export 'orders/order_list.dart';
 export 'orders/order_template.dart';
