@@ -24,12 +24,20 @@ class DashboardordersBloc
       yield* _mapStartOrderBoardUpdateEventToState();
     }
 
+    if (event is StartCunsumerOrderBoardUpdate) {
+      yield* _mapStartCunsumerOrderListEventToState();
+    }
+
     if (event is OrderBoardUpdateListner) {
       yield* _mapOrderBoardUpdateListnerToState(event);
     }
 
     if (event is StartOrderSearchEvent) {
       yield* _mapStartOrderSearchEventToState(event);
+    }
+
+    if (event is StartConsumerOrderSearchEvent) {
+      yield* _mapStartConsumerOrderSearchEventToState(event);
     }
 
     if (event is UpdateOrder) {
@@ -57,6 +65,25 @@ class DashboardordersBloc
     yield DashboardLoading();
 
     orderRepository.getAllOrders().listen((event) {
+      add(OrderBoardUpdateListner(event.documents));
+    });
+  }
+
+  Stream<DashboardordersState> _mapStartCunsumerOrderListEventToState() async* {
+    yield DashboardLoading();
+
+    orderRepository.getAllOrdersforConsumer().listen((event) {
+      add(OrderBoardUpdateListner(event.documents));
+    });
+  }
+
+  Stream<DashboardordersState> _mapStartConsumerOrderSearchEventToState(
+      StartConsumerOrderSearchEvent event) async* {
+    yield DashboardLoading();
+
+    orderRepository
+        .getOrdersBySearchforConsumer(event.searchKey)
+        .listen((event) {
       add(OrderBoardUpdateListner(event.documents));
     });
   }

@@ -11,6 +11,8 @@ abstract class DashboardordersEvent extends Equatable {
 
 class StartOrderBoardUpdateEvent extends DashboardordersEvent {}
 
+class StartCunsumerOrderBoardUpdate extends DashboardordersEvent {}
+
 class OrderBoardUpdateListner extends DashboardordersEvent {
   final List<DocumentSnapshot> docs;
   const OrderBoardUpdateListner(this.docs);
@@ -23,6 +25,15 @@ class StartOrderSearchEvent extends DashboardordersEvent {
   final String searchKey;
 
   const StartOrderSearchEvent(this.searchKey);
+
+  @override
+  List<Object> get props => [searchKey];
+}
+
+class StartConsumerOrderSearchEvent extends DashboardordersEvent {
+  final String searchKey;
+
+  const StartConsumerOrderSearchEvent(this.searchKey);
 
   @override
   List<Object> get props => [searchKey];

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class SearchBar extends StatefulWidget {
   final String hintText;
   final Function searchForText;
+  final Function clearText;
 
-  SearchBar(this.hintText, this.searchForText);
+  SearchBar(this.hintText, this.searchForText, this.clearText);
 
   @override
   State<StatefulWidget> createState() {
@@ -45,6 +46,7 @@ class _SearchBar extends State<SearchBar> {
                         child: Icon(Icons.clear),
                         onTap: () {
                           searchTextController.clear();
+                          widget.clearText();
                         },
                       ),
                 hintText: widget.hintText,
