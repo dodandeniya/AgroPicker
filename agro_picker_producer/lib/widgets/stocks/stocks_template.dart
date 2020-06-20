@@ -40,7 +40,6 @@ class _StocksTemplate extends State<StocksTemplate> {
         title: Text(
             '${widget.productStores.product.type.name.firstLetterCapital} > ${widget.productStores.product.name.firstLetterCapital}'),
         contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
-        isThreeLine: true,
         trailing: DropdownButton(
           value: widget.productStores.status.splitString(),
           underline: Container(),
