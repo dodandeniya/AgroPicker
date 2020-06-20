@@ -14,3 +14,6 @@ export 'common/file_pick.dart';
 export 'profile.dart';
 export 'profile/profile_page.dart';
 export 'profile/profile_basicinfo.dart';
+export 'productStock/productStockList.dart';
+export 'orders/order_list.dart';
+export 'orders/order_template.dart';

@@ -37,6 +37,36 @@ class OrderRepository {
     return db.getQueryObject<Orders>(param);
   }
 
+  Stream<QuerySnapshot> getOrdersBySearchforConsumer(String searchKey) {
+    List<FirebaseQueryParameter> param = [
+      FirebaseQueryParameter(
+          fieldName: 'consumerId',
+          fieldValue: user.userId,
+          queryMethod: QueryMethod.isEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'orderItem.name',
+          fieldValue: searchKey,
+          queryMethod: QueryMethod.isGreaterThanOrEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'orderItem.name',
+          fieldValue: searchKey + 'z',
+          queryMethod: QueryMethod.isLessThan),
+    ];
+
+    return db.getQueryObject<Orders>(param);
+  }
+
+  Stream<QuerySnapshot> getAllOrdersforConsumer() {
+    List<FirebaseQueryParameter> param = [
+      FirebaseQueryParameter(
+          fieldName: 'consumerId',
+          fieldValue: user.userId,
+          queryMethod: QueryMethod.isEqualTo),
+    ];
+
+    return db.getQueryObject<Orders>(param);
+  }
+
   Future<bool> insertOrder(Orders order) async {
     try {
       await db.insertDocumentData<Orders>(order.toJson(), order.orderId);

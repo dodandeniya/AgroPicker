@@ -10,9 +10,19 @@ class Dashboard extends StatefulWidget {
   }
 }
 
-class _DashboardView extends State<Dashboard> {
+class _DashboardView extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
   final UserStatusSingleton userStatusSingleton =
       UserStatusSingleton.getInstance();
+  TabController _tabController;
+
+  final List<String> _tabs = <String>["PRODUCT STORE", "MY ORDERS"];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: _tabs.length, vsync: this);
+  }
 
   @override
   void didChangeDependencies() {
@@ -26,9 +36,6 @@ class _DashboardView extends State<Dashboard> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<DashboardBloc>(
-          create: (c) => DashboardBloc(),
-        ),
         BlocProvider<DashboardordersBloc>(
           create: (c) => DashboardordersBloc(),
         ),
@@ -50,8 +57,21 @@ class _DashboardView extends State<Dashboard> {
               ),
               appBar: AppBar(
                 title: Text('Agro Picker Dashboard'),
+                bottom: TabBar(
+                  onTap: (ind) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  controller: _tabController,
+                  tabs: _tabs
+                      .map((e) => Tab(
+                            child: Text(e),
+                          ))
+                      .toList(),
+                ),
               ),
-              body: DashboardPage()),
+              body: DashboardPage(
+                tabController: _tabController,
+              )),
         ),
       ),
     );
