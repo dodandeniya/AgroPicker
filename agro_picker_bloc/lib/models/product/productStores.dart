@@ -14,19 +14,11 @@ class ProductStores {
   final dynamic price;
   StockAvailabilty status;
   final String productImage;
-<<<<<<< HEAD
   final VenderModel vender;
   final String description;
 
   ProductStores(this.venderId, this.vender, this.isVenderOnline, this.product,
       this.price, this.status,
-=======
-  final String description;
-  final VenderModel vender;
-  
-  ProductStores(
-      this.venderId, this.vender, this.isVenderOnline, this.product, this.price, this.status,
->>>>>>> 1dd7ad495382991edbe9fb45386e04f20a74226d
       {this.productImage, this.description}) {
     this.storeId = Uuid().v1();
   }
