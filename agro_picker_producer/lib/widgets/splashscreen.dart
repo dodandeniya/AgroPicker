@@ -15,7 +15,13 @@ class SplashScreen extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          Text(message),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+            ),
+          )
         ],
       )),
     );

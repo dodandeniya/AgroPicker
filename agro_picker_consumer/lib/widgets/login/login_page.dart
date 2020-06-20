@@ -129,9 +129,10 @@ class _LoginPage extends State<LoginPage> {
                               ? null
                               : () {
                                   _loginBloc.add(LoginWithCredentialsPressed(
-                                      email: _userNameEditingController.text,
-                                      password:
-                                          _passwordEditingController.text));
+                                      email: _userNameEditingController.text
+                                          .trim(),
+                                      password: _passwordEditingController.text
+                                          .trim()));
                                 },
                           child: isLoading
                               ? Text(
