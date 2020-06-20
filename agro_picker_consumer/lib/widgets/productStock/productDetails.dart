@@ -8,6 +8,8 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetails extends State<ProductDetails> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -274,7 +276,9 @@ class _ProductDetails extends State<ProductDetails> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: RaisedButton.icon(
                 textTheme: ButtonTextTheme.primary,
-                onPressed: () {},
+                onPressed: () async {
+                  await showDialog(context: context, child: purchaseDialog());
+                },
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Buy Now'),
               ),
@@ -282,6 +286,60 @@ class _ProductDetails extends State<ProductDetails> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget purchaseDialog() {
+    return SimpleDialog(
+      title: Text('Purchase Order'),
+      children: <Widget>[
+        Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter a Quantity';
+                    }
+                    return null;
+                  },
+                  onEditingComplete: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  decoration: InputDecoration(
+                    errorMaxLines: 20,
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    labelText: 'Purchase Quantity',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)),
+                    contentPadding: EdgeInsets.only(
+                        top: 0, bottom: 10, left: 10, right: 10),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: RaisedButton(
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    if (formKey.currentState.validate()) {}
+                  },
+                  child: Text(
+                    'Order Now',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
