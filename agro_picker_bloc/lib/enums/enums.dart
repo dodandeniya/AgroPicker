@@ -19,6 +19,7 @@ enum AgroProfileState {
 enum FileUploadType {
   ProfilePicture,
   BusinessDocument,
+  StockPhoto,
 }
 
 enum OrderStatuses {

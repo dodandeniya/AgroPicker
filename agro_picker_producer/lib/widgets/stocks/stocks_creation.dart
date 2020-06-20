@@ -6,37 +6,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StockCreation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider<DashboardsummaryBloc>(
-    //   create: (context) => DashboardsummaryBloc(),
-    //   child: SafeArea(
-    //     child: GestureDetector(
-    //       onTap: () {
-    //         FocusScope.of(context).unfocus();
-    //       },
-    //       child: Scaffold(
-    //         appBar: AppBar(
-    //           title: Text('Add Stocks'),
-    //         ),
-    //         body: BlocBuilder<DashboardsummaryBloc, DashboardsummaryState>(
-    //             builder: (context, state) {
-    //           if (state is UpdateSummaryScreen) {
-    //             return Center(
-    //               child: CircularProgressIndicator(),
-    //             );
-    //           }
-    //           return StocksCreationScreen();
-    //         }),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    return SafeArea(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProductsBloc>(
+          create: (context) => ProductsBloc(),
+        ),
+        BlocProvider<DashboardproductstockBloc>(
+          create: (context) => DashboardproductstockBloc(),
+        ),
+        BlocProvider<FileuploadBloc>(
+          create: (context) => FileuploadBloc(),
+        ),
+      ],
+      child: SafeArea(
         child: GestureDetector(
-            child: Scaffold(
-      appBar: AppBar(
-        title: Text('Add Stocks'),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('Add Stocks'),
+            ),
+            body: StocksCreationScreen(),
+          ),
+        ),
       ),
-      body: StocksCreationScreen(),
-    )));
+    );
   }
 }

@@ -59,7 +59,7 @@ class DashboardproductstockBloc
     List<ProductStores> stocks = [];
     var stockList = event.docs.toList();
 
-    if (stockList != null || stockList.isEmpty == false) {
+    if (stockList.isNotEmpty) {
       for (var item in stockList) {
         stocks.add(ProductStores.fromJson(item.data));
       }
@@ -84,7 +84,7 @@ class DashboardproductstockBloc
     List<ProductStores> stocks = [];
     var stockList = event.docs.toList();
 
-    if (stockList != null || stockList.isEmpty == false) {
+    if (stockList.isNotEmpty) {
       for (var item in stockList) {
         stocks.add(ProductStores.fromJson(item.data));
       }
@@ -97,6 +97,7 @@ class DashboardproductstockBloc
 
   Stream<DashboardproductstockState> _mapCreateStockItemEventToState(
       CreateStockItem event) async* {
+    yield DashboardStockLoading();
     var result = await stockRepository.insertStock(event.stockItem);
 
     if (result) {

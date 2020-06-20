@@ -86,7 +86,7 @@ class _OrderTemplate extends State<OrderTemplate> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OrderDetails(widget.order.orderId),
+              builder: (context) => OrderDetails(widget.order),
             ),
           );
         },
