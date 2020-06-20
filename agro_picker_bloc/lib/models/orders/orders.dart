@@ -13,12 +13,13 @@ class Orders {
   final String consumerId;
   final Products orderItem;
   final OrderStatuses status;
+  final Consumer consumer;
   @JsonKey(
       name: 'orderDateTime', fromJson: _dtDataFromJson, toJson: _dtDataToJson)
   final Timestamp orderDateTime;
 
   Orders(this.venderId, this.consumerId, this.orderItem, this.status,
-      this.orderDateTime) {
+      this.orderDateTime, this.consumer) {
     this.orderId = Uuid().v1();
   }
 

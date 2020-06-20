@@ -96,7 +96,7 @@ class DashboardordersBloc
         .where((element) => element.data['status'] != 'Completed')
         .toList();
 
-    if (ordersList != null || ordersList.isEmpty == false) {
+    if (ordersList.isNotEmpty) {
       for (var item in ordersList) {
         orders.add(Orders.fromJson(item.data));
       }
