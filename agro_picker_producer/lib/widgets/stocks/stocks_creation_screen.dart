@@ -494,11 +494,12 @@ class _StocksCreationScreen extends State<StocksCreationScreen> {
 
   void selectDate() async {
     var selectedDateTime = await showDatePicker(
-        initialEntryMode: DatePickerEntryMode.input,
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime.now());
+      initialEntryMode: DatePickerEntryMode.input,
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+    );
 
     if (selectedDateTime == null) {
       return;
@@ -558,7 +559,7 @@ class _StocksCreationScreen extends State<StocksCreationScreen> {
         user.userId, '${user.firstName} ${user.lastName}', user.mobileNumber);
     var product = Products(
         products.id,
-        products.name,
+        products.name.toLowerCase(),
         products.type,
         selectedCategory,
         selectedGrowthType,
