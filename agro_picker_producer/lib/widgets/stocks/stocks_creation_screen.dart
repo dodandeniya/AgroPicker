@@ -554,6 +554,8 @@ class _StocksCreationScreen extends State<StocksCreationScreen> {
     var description = descriptionController.text;
     var totalQuantity =
         products.totalQuantity + availableQuantity - products.purchasedQuantity;
+    var vendor = VenderModel(
+        user.userId, '${user.firstName} ${user.lastName}', user.mobileNumber);
     var product = Products(
         products.id,
         products.name,
@@ -568,8 +570,8 @@ class _StocksCreationScreen extends State<StocksCreationScreen> {
         products.maxPurchaseLimit,
         products.maxRetailPrice,
         price);
-    ProductStores productStores = ProductStores(
-        user.userId, user.isOnline, product, price, StockAvailabilty.Available,
+    ProductStores productStores = ProductStores(user.userId, vendor,
+        user.isOnline, product, price, StockAvailabilty.Available,
         productImage: filePath, description: description);
     dashboardproductstockBloc.add(CreateStockItem(productStores));
   }
