@@ -20,12 +20,20 @@ class DashboardproductstockBloc
       yield* _mapStartStockBoardUpdateEventToState();
     }
 
+    if (event is StartConsumerStockBoardUpdate) {
+      yield* _mapStartConsumerStockBoardUpdateToState();
+    }
+
     if (event is StockBoardUpdateListner) {
       yield* _mapStockBoardUpdateListnerEventToState(event);
     }
 
     if (event is StartStockSearchEvent) {
       yield* _mapStartStockSearchEventToState(event);
+    }
+
+    if (event is StartConsumerStockSearchEvent) {
+      yield* _mapStartConsumerStockSearchEventToState(event);
     }
 
     if (event is StockSearchListner) {
@@ -54,6 +62,15 @@ class DashboardproductstockBloc
     });
   }
 
+  Stream<DashboardproductstockState>
+      _mapStartConsumerStockBoardUpdateToState() async* {
+    yield DashboardStockLoading();
+
+    stockRepository.getAllStocksforConsumer().listen((event) {
+      add(StockBoardUpdateListner(event.documents));
+    });
+  }
+
   Stream<DashboardproductstockState> _mapStockBoardUpdateListnerEventToState(
       StockBoardUpdateListner event) async* {
     List<ProductStores> stocks = [];
@@ -75,6 +92,17 @@ class DashboardproductstockBloc
     yield DashboardStockLoading();
 
     stockRepository.getStockBySearch(event.searchKey).listen((event) {
+      add(StockSearchListner(event.documents));
+    });
+  }
+
+  Stream<DashboardproductstockState> _mapStartConsumerStockSearchEventToState(
+      StartConsumerStockSearchEvent event) async* {
+    yield DashboardStockLoading();
+
+    stockRepository
+        .getStockBySearchforConsumer(event.searchKey)
+        .listen((event) {
       add(StockSearchListner(event.documents));
     });
   }

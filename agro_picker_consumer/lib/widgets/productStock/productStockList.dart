@@ -12,71 +12,93 @@ class ProductStockList extends StatefulWidget {
 
 class _ProductStockList extends State<ProductStockList> {
   DashboardproductstockBloc dashboardStockBloc;
+  DashboardordersBloc ordersBloc;
   int pendingOrderCount = 0;
 
   @override
   void initState() {
     super.initState();
     dashboardStockBloc = BlocProvider.of<DashboardproductstockBloc>(context);
-    dashboardStockBloc.add(StartStockBoardUpdateEvent());
+    dashboardStockBloc.add(StartConsumerStockBoardUpdate());
+    ordersBloc = BlocProvider.of<DashboardordersBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          SearchBar(
-              'Search By Stock Item', searchStockItem, clearSearchResults),
-          Center(
-            child: RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductDetails(),
-                  ),
-                );
+    return BlocListener<DashboardordersBloc, DashboardordersState>(
+      listener: (context, state) {
+        if (state is OrderCreationFailed) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Unable to create order. Try again later.'),
+                    Icon(Icons.error)
+                  ],
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+        }
+
+        if (state is OrderCreated) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Your order has been created sucessfully.'),
+                    Icon(Icons.check)
+                  ],
+                ),
+                backgroundColor: Colors.green,
+              ),
+            );
+        }
+      },
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            SearchBar(
+                'Search By Stock Item', searchStockItem, clearSearchResults),
+            BlocBuilder<DashboardproductstockBloc, DashboardproductstockState>(
+              builder: (context, state) {
+                if (state is EmptyStockList) {
+                  return Expanded(
+                    child: Center(
+                      child: Text('No Stocks to Show'),
+                    ),
+                  );
+                }
+                if (state is UpdateStocksList) {
+                  return Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return BlocProvider<DashboardordersBloc>(
+                              create: (context) => DashboardordersBloc(),
+                              child: StocksTemplate(state.orderList[index]));
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider();
+                        },
+                        itemCount: state.orderList.length),
+                  );
+                }
+                return Expanded(
+                    child: Center(
+                  child: CircularProgress(),
+                ));
               },
             ),
-          )
-
-          /*BlocConsumer<DashboardordersBloc, DashboardordersState>(
-            listener: (context, state) {
-              if (state is UpdateOrdersList) {
-                setState(() {
-                  pendingOrderCount = state.orderList.length;
-                });
-              }
-            },
-            builder: (context, state) {
-              if (state is EmptyOrderList) {
-                return Expanded(
-                  child: Center(
-                    child: Text('No Order to Show'),
-                  ),
-                );
-              }
-              if (state is UpdateOrdersList) {
-                return Expanded(
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return OrderTemplate(state.orderList[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider();
-                      },
-                      itemCount: state.orderList.length),
-                );
-              }
-              return Expanded(
-                child: Center(
-                  child: CircularProgress(),
-                ),
-              );
-            },
-          ),*/
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -85,13 +107,14 @@ class _ProductStockList extends State<ProductStockList> {
     setState(() {
       pendingOrderCount = 0;
     });
-    dashboardStockBloc.add(StartStockSearchEvent(stockName.toLowerCase()));
+    dashboardStockBloc
+        .add(StartConsumerStockSearchEvent(stockName.toLowerCase()));
   }
 
   void clearSearchResults() {
     setState(() {
       pendingOrderCount = 0;
     });
-    dashboardStockBloc.add(StartStockBoardUpdateEvent());
+    dashboardStockBloc.add(StartConsumerStockBoardUpdate());
   }
 }

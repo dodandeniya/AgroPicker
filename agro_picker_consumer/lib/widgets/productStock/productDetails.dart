@@ -1,6 +1,14 @@
+import 'package:agro_picker_bloc/agri_picker_blocs.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetails extends StatefulWidget {
+  final ProductStores productItem;
+
+  ProductDetails(this.productItem);
+
   @override
   State<StatefulWidget> createState() {
     return _ProductDetails();
@@ -8,12 +16,24 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetails extends State<ProductDetails> {
+  final UserStatusSingleton userStatusSingleton =
+      UserStatusSingleton.getInstance();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  DashboardordersBloc ordersBloc;
+  int purchasedQuantity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    ordersBloc = BlocProvider.of<DashboardordersBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Product Stock Details'),
+          title: Text('Product Item Details'),
         ),
         body: Column(
           children: <Widget>[
@@ -22,8 +42,8 @@ class _ProductDetails extends State<ProductDetails> {
               child: Card(
                 child: Container(
                   alignment: Alignment.topCenter,
-                  child: Image.asset(
-                    'assets/images/carrot-on-white-vert.jpg',
+                  child: Image.network(
+                    widget.productItem.productImage,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -33,7 +53,7 @@ class _ProductDetails extends State<ProductDetails> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               alignment: Alignment.center,
               child: Text(
-                'LKR 150 PER KG',
+                'Rs ${widget.productItem.price} PER ${widget.productItem.product.mesureType.name}',
                 style: TextStyle(
                     fontSize: 25, color: Theme.of(context).primaryColor),
               ),
@@ -69,7 +89,8 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('Carrot'),
+                                  child: Text(
+                                      '${widget.productItem.product.name.firstLetterCapital}'),
                                 ),
                               ],
                             ),
@@ -97,14 +118,11 @@ class _ProductDetails extends State<ProductDetails> {
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Dont buy from us. Our Products are not good. They are not edible. If you buy you will get poisoned.',
-                                    softWrap: true,
-                                  ),
-                                ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    alignment: Alignment.topLeft,
+                                    child: getDiscription(
+                                        widget.productItem.description)),
                               ],
                             ),
                           ),
@@ -134,7 +152,8 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('Gowtham'),
+                                  child: Text(
+                                      widget.productItem.vender.venderName),
                                 ),
                               ],
                             ),
@@ -165,7 +184,8 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('0777123456'),
+                                  child:
+                                      Text(widget.productItem.vender.mobileNo),
                                 ),
                               ],
                             ),
@@ -196,7 +216,9 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('5 Kg'),
+                                  child: Text(widget
+                                      .productItem.product.availableQuantity
+                                      .toString()),
                                 ),
                               ],
                             ),
@@ -227,7 +249,8 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('15/05/2020'),
+                                  child: Text(
+                                      '${formattedDate(widget.productItem.product.harvestDate.toDate())}'),
                                 )
                               ],
                             ),
@@ -258,7 +281,8 @@ class _ProductDetails extends State<ProductDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   alignment: Alignment.topLeft,
-                                  child: Text('Organic'),
+                                  child: Text(
+                                      '${widget.productItem.product.growthType.name}'),
                                 ),
                               ],
                             ),
@@ -274,7 +298,14 @@ class _ProductDetails extends State<ProductDetails> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: RaisedButton.icon(
                 textTheme: ButtonTextTheme.primary,
-                onPressed: () {},
+                onPressed: () async {
+                  var result = await showDialog(
+                      context: context, child: purchaseDialog());
+
+                  if (result) {
+                    Navigator.pop(context);
+                  }
+                },
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Buy Now'),
               ),
@@ -283,5 +314,105 @@ class _ProductDetails extends State<ProductDetails> {
         ),
       ),
     );
+  }
+
+  Text getDiscription(String discription) {
+    return (discription.isNotEmpty)
+        ? Text(discription, softWrap: true)
+        : Text('-', softWrap: true);
+  }
+
+  String formattedDate(DateTime dateTime) =>
+      DateFormat.yMMMd().format(dateTime);
+
+  Widget purchaseDialog() {
+    TextEditingController qty = TextEditingController();
+    return SimpleDialog(
+      title: Text('Purchase Order'),
+      children: <Widget>[
+        Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: TextFormField(
+                  controller: qty,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter a Quantity';
+                    }
+
+                    if (int.parse(value) >
+                        widget.productItem.product.availableQuantity) {
+                      return 'Quantity must be below or equal to available quantity';
+                    }
+
+                    return null;
+                  },
+                  onEditingComplete: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  decoration: InputDecoration(
+                    errorMaxLines: 20,
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    labelText: 'Purchase Quantity',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)),
+                    contentPadding: EdgeInsets.only(
+                        top: 0, bottom: 10, left: 10, right: 10),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: RaisedButton(
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    if (formKey.currentState.validate()) {
+                      this.purchasedQuantity = int.parse(qty.text.trim());
+                      createOrder();
+                      Navigator.pop(context, true);
+                    }
+                  },
+                  child: Text(
+                    'Order Now',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void createOrder() {
+    var user = this.userStatusSingleton.user;
+    var consumer = Consumer(user.userId, user.firstName, user.lastName);
+    var productItem = widget.productItem.product;
+    var product = Products(
+        productItem.id,
+        productItem.name.toLowerCase(),
+        productItem.type,
+        productItem.category,
+        productItem.growthType,
+        productItem.mesureType,
+        productItem.harvestDate,
+        productItem.totalQuantity,
+        productItem.availableQuantity,
+        this.purchasedQuantity,
+        productItem.maxPurchaseLimit,
+        productItem.maxRetailPrice,
+        productItem.sellingPrice);
+
+    Orders newOrder = Orders(widget.productItem.venderId, user.userId, product,
+        OrderStatuses.New_Order, Timestamp.now(), consumer);
+
+    ordersBloc.add(CreateOrder(newOrder));
   }
 }

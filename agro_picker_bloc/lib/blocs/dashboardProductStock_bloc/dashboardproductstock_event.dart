@@ -10,6 +10,8 @@ abstract class DashboardproductstockEvent extends Equatable {
 
 class StartStockBoardUpdateEvent extends DashboardproductstockEvent {}
 
+class StartConsumerStockBoardUpdate extends DashboardproductstockEvent {}
+
 class StockBoardUpdateListner extends DashboardproductstockEvent {
   final List<DocumentSnapshot> docs;
   const StockBoardUpdateListner(this.docs);
@@ -22,6 +24,15 @@ class StartStockSearchEvent extends DashboardproductstockEvent {
   final String searchKey;
 
   const StartStockSearchEvent(this.searchKey);
+
+  @override
+  List<Object> get props => [searchKey];
+}
+
+class StartConsumerStockSearchEvent extends DashboardproductstockEvent {
+  final String searchKey;
+
+  const StartConsumerStockSearchEvent(this.searchKey);
 
   @override
   List<Object> get props => [searchKey];

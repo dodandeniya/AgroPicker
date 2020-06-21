@@ -26,12 +26,43 @@ class ProductStockRepository {
     return db.getQueryObject<ProductStores>(param);
   }
 
+  Stream<QuerySnapshot> getStockBySearchforConsumer(String searchKey) {
+    List<FirebaseQueryParameter> param = [
+      FirebaseQueryParameter(
+          fieldName: 'product.name',
+          fieldValue: searchKey,
+          queryMethod: QueryMethod.isGreaterThanOrEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'product.name',
+          fieldValue: searchKey + 'z',
+          queryMethod: QueryMethod.isLessThan),
+      FirebaseQueryParameter(
+          fieldName: 'product.name',
+          queryMethod: QueryMethod.orderByAsscending),
+      FirebaseQueryParameter(
+          fieldName: 'product.harvestDate',
+          queryMethod: QueryMethod.orderByDescending),
+    ];
+
+    return db.getQueryObject<ProductStores>(param);
+  }
+
   Stream<QuerySnapshot> getAllStocks() {
     List<FirebaseQueryParameter> param = [
       FirebaseQueryParameter(
           fieldName: 'venderId',
           fieldValue: user.userId,
           queryMethod: QueryMethod.isEqualTo),
+    ];
+
+    return db.getQueryObject<ProductStores>(param);
+  }
+
+  Stream<QuerySnapshot> getAllStocksforConsumer() {
+    List<FirebaseQueryParameter> param = [
+      FirebaseQueryParameter(
+          fieldName: 'product.harvestDate',
+          queryMethod: QueryMethod.orderByDescending),
     ];
 
     return db.getQueryObject<ProductStores>(param);
