@@ -1,4 +1,7 @@
+import 'package:agro_picker_bloc/blocs/blocs.dart';
+import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,84 +17,175 @@ class _LoginPage extends State<LoginPage> {
       TextEditingController();
   bool isLoading = true;
 
+  LoginBloc _loginBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      color: Colors.greenAccent,
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: Image.asset('assets/logo.png'),
-            ),
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: TextFormField(
-                      controller: _userNameEditingController,
-                      decoration: InputDecoration(
-                        hintText: 'User Name',
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
-                        contentPadding: EdgeInsets.only(
-                            top: 0, bottom: 10, left: 10, right: 15),
+    return BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state.isFailure) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text('Login Failure'), Icon(Icons.error)],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            setState(() {
+              isLoading = true;
+            });
+          }
+          if (state.isSubmitting) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+          if (!state.isEmailVerified && state.isSuccess) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Email Address has not been verified yet.'),
+                      Icon(Icons.error)
+                    ],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            setState(() {
+              isLoading = true;
+            });
+          }
+          if (state.isSuccess && state.isEmailVerified) {
+            BlocProvider.of<AuthenticationBloc>(context)
+                .add(CheckProfileCompleted());
+          }
+        },
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: Image.asset('assets/images/logo.png'),
+                ),
+                Card(
+                  elevation: 4,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 25),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: TextFormField(
+                          controller: _userNameEditingController,
+                          decoration: InputDecoration(
+                            hintText: 'User Name',
+                            hintStyle: Theme.of(context).textTheme.caption,
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            contentPadding: EdgeInsets.only(
+                                top: 0, bottom: 10, left: 10, right: 15),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: TextFormField(
-                      controller: _passwordEditingController,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
-                        contentPadding: EdgeInsets.only(
-                            top: 0, bottom: 10, left: 10, right: 10),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: TextFormField(
+                          obscureText: true,
+                          controller: _passwordEditingController,
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: Theme.of(context).textTheme.caption,
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            contentPadding: EdgeInsets.only(
+                                top: 0, bottom: 10, left: 10, right: 10),
+                          ),
+                        ),
                       ),
-                    ),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                        child: RaisedButton(
+                          textTheme: ButtonTextTheme.primary,
+                          onPressed: !isLoading
+                              ? null
+                              : () {
+                                  _loginBloc.add(LoginWithCredentialsPressed(
+                                      email: _userNameEditingController.text
+                                          .trim(),
+                                      password: _passwordEditingController.text
+                                          .trim()));
+                                },
+                          child: isLoading
+                              ? Text(
+                                  'LOGIN',
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Theme.of(context).accentColor),
+                                  ),
+                                  width: 25,
+                                  height: 25,
+                                ),
+                        ),
+                      )
+                    ],
                   ),
-                  RaisedButton(
-                      color: Colors.blue[900],
-                      onPressed: () {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                      child: isLoading
-                          ? Text(
-                              'Sign In',
-                              style: TextStyle(color: Colors.white),
-                            )
-                          : Container(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.lightBlue),
-                              ),
-                              width: 25,
-                              height: 25,
-                            )),
-                  Container(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Text('New User?'),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Text('New User?',
+                          style: Theme.of(context).textTheme.bodyText1),
+                      Container(
+                        width: double.infinity,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        child: RaisedButton(
+                          color: Theme.of(context).accentColor,
+                          onPressed: isLoading
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Registration(),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: Text(
+                            'REGISTER',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Text(
-                      'Registration',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
