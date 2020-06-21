@@ -494,9 +494,9 @@ class _StocksCreationScreen extends State<StocksCreationScreen> {
 
   void selectDate() async {
     var selectedDateTime = await showDatePicker(
-      initialEntryMode: DatePickerEntryMode.input,
+      initialEntryMode: DatePickerEntryMode.calendar,
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime.now().subtract(Duration(days: 30)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
