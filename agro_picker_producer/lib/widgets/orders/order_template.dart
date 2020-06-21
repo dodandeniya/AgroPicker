@@ -1,6 +1,7 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_producer/agro_picker_producer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class OrderTemplate extends StatefulWidget {
@@ -19,15 +20,21 @@ class OrderTemplate extends StatefulWidget {
 class _OrderTemplate extends State<OrderTemplate> {
   final List<String> orderStatuses = [
     OrderStatuses.New_Order.splitString(),
-    OrderStatuses.Confirmed.asString(),
-    OrderStatuses.Preparing.asString(),
-    OrderStatuses.Packaging.asString(),
-    OrderStatuses.Collection.asString(),
+    OrderStatuses.Confirmed.splitString(),
+    OrderStatuses.Preparing.splitString(),
+    OrderStatuses.Packaging.splitString(),
+    OrderStatuses.Collection.splitString(),
     OrderStatuses.On_Route.splitString(),
-    OrderStatuses.Payment.asString(),
-    OrderStatuses.Completed.asString()
+    OrderStatuses.Payment.splitString(),
+    OrderStatuses.Completed.splitString()
   ];
-  String selectedStatus = OrderStatuses.New_Order.splitString();
+  DashboardordersBloc dashboardordersBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    dashboardordersBloc = BlocProvider.of<DashboardordersBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +69,7 @@ class _OrderTemplate extends State<OrderTemplate> {
             Container(
               alignment: Alignment.bottomRight,
               child: DropdownButton(
-                value: selectedStatus,
+                value: widget.order.status.splitString(),
                 underline: Container(),
                 items: orderStatuses
                     .map<DropdownMenuItem<String>>(
@@ -73,10 +80,12 @@ class _OrderTemplate extends State<OrderTemplate> {
                     )
                     .toList(),
                 onChanged: (value) {
-                  setState(() {
-                    selectedStatus = value;
-                  });
-                  print(value);
+                  var selectedValue = OrderStatuses.values
+                      .firstWhere((element) => element.splitString() == value);
+
+                  var updatedValue = {'status': selectedValue.asString()};
+                  dashboardordersBloc
+                      .add(UpdateOrder(updatedValue, widget.order.orderId));
                 },
               ),
             )
