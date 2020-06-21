@@ -18,7 +18,6 @@ class _StocksTemplate extends State<StocksTemplate> {
     StockAvailabilty.Not_Available.splitString(),
     StockAvailabilty.Sold_Out.splitString(),
   ];
-  String selectedStockAvailability;
   DashboardproductstockBloc dashboardproductstockBloc;
 
   @override
