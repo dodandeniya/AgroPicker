@@ -1,13 +1,13 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:agro_picker_consumer/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class StocksTemplate extends StatefulWidget {
   final ProductStores productStores;
-  final DashboardordersBloc ordersBloc;
 
-  StocksTemplate(this.productStores, this.ordersBloc);
+  StocksTemplate(this.productStores);
 
   @override
   State<StatefulWidget> createState() {
@@ -54,8 +54,10 @@ class _StocksTemplate extends State<StocksTemplate> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  ProductDetails(widget.productStores, widget.ordersBloc),
+              builder: (context) => BlocProvider<DashboardordersBloc>(
+                create: (context) => DashboardordersBloc(),
+                child: ProductDetails(widget.productStores),
+              ),
             ),
           );
         },

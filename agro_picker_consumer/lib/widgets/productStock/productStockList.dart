@@ -81,8 +81,9 @@ class _ProductStockList extends State<ProductStockList> {
                   return Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {
-                          return StocksTemplate(
-                              state.orderList[index], ordersBloc);
+                          return BlocProvider<DashboardordersBloc>(
+                              create: (context) => DashboardordersBloc(),
+                              child: StocksTemplate(state.orderList[index]));
                         },
                         separatorBuilder: (context, index) {
                           return const Divider();

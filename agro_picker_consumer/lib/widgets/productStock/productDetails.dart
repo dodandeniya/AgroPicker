@@ -1,13 +1,13 @@
 import 'package:agro_picker_bloc/agri_picker_blocs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ProductDetails extends StatefulWidget {
   final ProductStores productItem;
-  final DashboardordersBloc ordersBloc;
 
-  ProductDetails(this.productItem, this.ordersBloc);
+  ProductDetails(this.productItem);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,8 +19,14 @@ class _ProductDetails extends State<ProductDetails> {
   final UserStatusSingleton userStatusSingleton =
       UserStatusSingleton.getInstance();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  DashboardordersBloc ordersBloc;
   int purchasedQuantity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    ordersBloc = BlocProvider.of<DashboardordersBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -407,6 +413,6 @@ class _ProductDetails extends State<ProductDetails> {
     Orders newOrder = Orders(widget.productItem.venderId, user.userId, product,
         OrderStatuses.New_Order, Timestamp.now(), consumer);
 
-    widget.ordersBloc.add(CreateOrder(newOrder));
+    ordersBloc.add(CreateOrder(newOrder));
   }
 }
