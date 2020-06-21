@@ -90,7 +90,7 @@ class _OrderTemplate extends State<OrderTemplate> {
   }
 
   String formattedDate(DateTime dateTime) =>
-      DateFormat.yMMMMEEEEd().add_jms().format(dateTime);
+      DateFormat.yMd().add_jms().format(dateTime);
 
   Text checkState(OrderStatuses status) {
     Text text;

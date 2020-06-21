@@ -32,6 +32,9 @@ class OrderRepository {
           fieldName: 'venderId',
           fieldValue: user.userId,
           queryMethod: QueryMethod.isEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'orderDateTime',
+          queryMethod: QueryMethod.orderByDescending),
     ];
 
     return db.getQueryObject<Orders>(param);
@@ -62,6 +65,9 @@ class OrderRepository {
           fieldName: 'consumerId',
           fieldValue: user.userId,
           queryMethod: QueryMethod.isEqualTo),
+      FirebaseQueryParameter(
+          fieldName: 'orderDateTime',
+          queryMethod: QueryMethod.orderByDescending),
     ];
 
     return db.getQueryObject<Orders>(param);

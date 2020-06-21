@@ -90,6 +90,14 @@ class FirebaseInterface {
           collectionReference = collectionReference.where(parameter.fieldName,
               isNull: parameter.fieldValue);
         }
+        if (parameter.queryMethod == QueryMethod.orderByAsscending) {
+          collectionReference = collectionReference.orderBy(parameter.fieldName,
+              descending: false);
+        }
+        if (parameter.queryMethod == QueryMethod.orderByDescending) {
+          collectionReference = collectionReference.orderBy(parameter.fieldName,
+              descending: true);
+        }
       },
     );
 
@@ -186,6 +194,8 @@ enum QueryMethod {
   arrayContainsAny,
   whereIn,
   isNull,
+  orderByAsscending,
+  orderByDescending,
 }
 
 class FirebaseQueryParameter {
